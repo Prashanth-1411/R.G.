@@ -1,0 +1,50 @@
+import React, { useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { Header } from './components/Header';
+import { Footer } from './components/Footer';
+import { FloatingCTA } from './components/FloatingCTA';
+import { Home } from './pages/Home';
+import { AmbulanceServices } from './pages/AmbulanceServices';
+import { FuneralServices } from './pages/FuneralServices';
+import { Testimonials } from './pages/Testimonials';
+import { Blog } from './pages/Blog';
+import { BlogPostDetail } from './pages/BlogPostDetail';
+import { Contact } from './pages/Contact';
+import { LocationPage } from './pages/LocationPage';
+
+
+const MainLayout: React.FC = () => {
+  const location = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
+
+  return (
+    <div className="flex flex-col min-h-screen">
+      <Header />
+      <main className="flex-grow">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/ambulance-services" element={<AmbulanceServices />} />
+          <Route path="/funeral-services" element={<FuneralServices />} />
+          <Route path="/testimonials" element={<Testimonials />} />
+          <Route path="/blog" element={<Blog />} />
+          <Route path="/blog/:slug" element={<BlogPostDetail />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/ambulance-service-in-:locationSlug" element={<LocationPage />} />
+        </Routes>
+      </main>
+      <Footer />
+      <FloatingCTA />
+    </div>
+  );
+};
+
+export const App: React.FC = () => {
+  return (
+    <Router>
+      <MainLayout />
+    </Router>
+  );
+};
