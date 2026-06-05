@@ -3,6 +3,8 @@ import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-route
 import { Header } from './components/Header';
 import { Footer } from './components/Footer';
 import { FloatingCTA } from './components/FloatingCTA';
+import { KeyboardShortcutsHelp } from './components/KeyboardShortcutsHelp';
+import { useKeyboardShortcuts } from './hooks/useKeyboardShortcuts';
 import { Home } from './pages/Home';
 import { AmbulanceServices } from './pages/AmbulanceServices';
 import { FuneralServices } from './pages/FuneralServices';
@@ -15,6 +17,7 @@ import { LocationPage } from './pages/LocationPage';
 
 const MainLayout: React.FC = () => {
   const location = useLocation();
+  const { showHelp, setShowHelp, shortcuts } = useKeyboardShortcuts();
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -37,6 +40,7 @@ const MainLayout: React.FC = () => {
       </main>
       <Footer />
       <FloatingCTA />
+      <KeyboardShortcutsHelp open={showHelp} onClose={() => setShowHelp(false)} shortcuts={shortcuts} />
     </div>
   );
 };

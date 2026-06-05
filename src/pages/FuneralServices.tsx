@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ShieldCheck, Heart, ArrowRight, X } from 'lucide-react';
 import { funeralServices } from '../data/funeral-services';
@@ -23,6 +23,25 @@ export const FuneralServices: React.FC = () => {
     title: "Funeral & Homage Care",
     description: "We handle final farewells with the absolute respect, precision, and dignity. Serving the state with decorated hearse vans, freezer boxes, and VIP arrangements."
   });
+
+  useEffect(() => {
+    const onDetail = (e: Event) => {
+      const ce = e as CustomEvent;
+      const service = services[ce.detail.index];
+      if (service) setSelectedService(service);
+    };
+    const onBooking = (e: Event) => {
+      const ce = e as CustomEvent;
+      const service = services[ce.detail.index];
+      if (service) openBookingModal(service.title);
+    };
+    window.addEventListener('shortcut:open-funeral-detail', onDetail);
+    window.addEventListener('shortcut:open-funeral-booking', onBooking);
+    return () => {
+      window.removeEventListener('shortcut:open-funeral-detail', onDetail);
+      window.removeEventListener('shortcut:open-funeral-booking', onBooking);
+    };
+  }, [services]);
 
   const openBookingModal = (serviceTitle: string) => {
     setBookingForm(prev => ({ ...prev, serviceName: serviceTitle }));

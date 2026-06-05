@@ -1,10 +1,11 @@
-import React, { useState, useMemo } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useMemo, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Search, Calendar, ChevronRight, BookOpen } from 'lucide-react';
 import { blogPosts } from '../data/blogs';
 
 export const Blog: React.FC = () => {
+  const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [pageContent] = useState<Record<string, string>>({
@@ -34,6 +35,16 @@ export const Blog: React.FC = () => {
     const d = new Date(dateStr);
     return d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
   };
+
+  useEffect(() => {
+    const handler = (e: Event) => {
+      const ce = e as CustomEvent;
+      const post = filteredBlogs[ce.detail.index];
+      if (post) navigate(`/blog/${post.slug}`);
+    };
+    window.addEventListener('shortcut:open-blog', handler);
+    return () => window.removeEventListener('shortcut:open-blog', handler);
+  }, [filteredBlogs, navigate]);
 
   return (
     <div className="pt-24 pb-20">

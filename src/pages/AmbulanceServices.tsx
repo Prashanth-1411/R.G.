@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ShieldCheck, ArrowRight, Ambulance, Heart, X } from 'lucide-react';
 import { ambulanceServices } from '../data/ambulance-services';
@@ -23,6 +23,25 @@ export const AmbulanceServices: React.FC = () => {
     title: "Ambulance Fleet",
     description: "Our comprehensive medical fleet is ready 24/7, providing certified Basic Life Support, neonatal incubators, high-flow ventilators, and interstate transits."
   });
+
+  useEffect(() => {
+    const onDetail = (e: Event) => {
+      const ce = e as CustomEvent;
+      const service = services[ce.detail.index];
+      if (service) setSelectedService(service);
+    };
+    const onBooking = (e: Event) => {
+      const ce = e as CustomEvent;
+      const service = services[ce.detail.index];
+      if (service) openBookingModal(service.title);
+    };
+    window.addEventListener('shortcut:open-ambulance-detail', onDetail);
+    window.addEventListener('shortcut:open-ambulance-booking', onBooking);
+    return () => {
+      window.removeEventListener('shortcut:open-ambulance-detail', onDetail);
+      window.removeEventListener('shortcut:open-ambulance-booking', onBooking);
+    };
+  }, [services]);
 
   const openBookingModal = (serviceTitle: string) => {
     setBookingForm(prev => ({ ...prev, serviceName: serviceTitle }));
