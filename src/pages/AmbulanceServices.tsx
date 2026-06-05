@@ -162,20 +162,10 @@ export const AmbulanceServices: React.FC = () => {
                 <X className="w-5 h-5" />
               </button>
 
-              <div className="relative h-64 sm:h-72">
-                <img
-                  src={getImage(selectedService.image_path)}
-                  alt={selectedService.title}
-                  className="w-full h-full object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex items-end p-6">
-                  <h2 className="text-2xl sm:text-3xl font-black text-white font-raleway">
-                    {selectedService.title}
-                  </h2>
-                </div>
-              </div>
-
-              <div className="p-6 sm:p-8 space-y-6">
+              <div className="p-6 sm:p-8 pt-20 space-y-6">
+                <h2 className="text-2xl sm:text-3xl font-black text-brandNavy font-raleway">
+                  {selectedService.title}
+                </h2>
                 <div className="space-y-2">
                   <h4 className="text-xs uppercase font-extrabold tracking-widest text-brandBlue font-poppins">
                     Diagnosis & Scope
