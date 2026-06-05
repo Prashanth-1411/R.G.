@@ -87,3 +87,14 @@ h1, h2, h3, h4, h5, h6 {
   transform: translateY(-6px);
   box-shadow: 0 25px 45px rgba(10, 31, 68, 0.12);
 }
+
+/* Mobile-first responsive improvements */
+@media (max-width: 640px) {
+  .section-padding {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  .text-balance {
+    text-wrap: balance;
+  }
+}

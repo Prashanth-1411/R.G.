@@ -61,19 +61,18 @@ export const AmbulanceServices: React.FC = () => {
   return (
     <div className="pt-24 pb-20">
       {/* Banner */}
-      <div className="bg-brandNavy text-white py-16 mb-16 relative overflow-hidden">
+      <div className="bg-brandNavy text-white py-12 sm:py-16 mb-10 sm:mb-16 relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-brandNavy to-brandBlue/35 opacity-90 z-0"></div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <h1 className="text-4xl sm:text-5xl font-black font-raleway tracking-tight">{pageContent.title || "Ambulance Fleet"}</h1>
-          <p className="mt-4 text-slate-300 font-poppins text-sm max-w-xl">
+          <h1 className="text-3xl sm:text-5xl font-black font-raleway tracking-tight">{pageContent.title || "Ambulance Fleet"}</h1>
+          <p className="mt-3 sm:mt-4 text-slate-300 font-poppins text-xs sm:text-sm max-w-xl">
             {pageContent.description}
           </p>
         </div>
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Services Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8">
           {services.map((s, idx) => (
             <motion.div
               key={s.id}
@@ -94,41 +93,41 @@ export const AmbulanceServices: React.FC = () => {
                   </div>
                 </div>
 
-                <div className="p-6 space-y-4">
-                  <h3 className="text-xl font-bold text-brandNavy font-raleway group-hover:text-brandBlue transition-colors">
+                <div className="p-5 sm:p-6 space-y-3 sm:space-y-4">
+                  <h3 className="text-lg sm:text-xl font-bold text-brandNavy font-raleway group-hover:text-brandBlue transition-colors">
                     {s.title}
                   </h3>
-                  <p className="text-slate-500 font-poppins text-xs font-semibold uppercase tracking-wider">
+                  <p className="text-slate-500 font-poppins text-[10px] sm:text-xs font-semibold uppercase tracking-wider">
                     {s.short_description}
                   </p>
-                  <p className="text-slate-600 text-sm font-poppins line-clamp-3 text-justify">
+                  <p className="text-slate-600 text-xs sm:text-sm font-poppins line-clamp-3 text-justify">
                     {s.description}
                   </p>
                 </div>
               </div>
 
-              <div className="p-6 pt-0 space-y-3">
-                <div className="flex flex-wrap gap-2 mb-2">
+              <div className="p-5 sm:p-6 pt-0 space-y-3">
+                <div className="flex flex-wrap gap-1.5 sm:gap-2 mb-2">
                   {s.features.slice(0, 3).map((f, i) => (
-                    <span key={i} className="inline-flex items-center gap-1 px-2.5 py-1 bg-brandBlue/5 text-brandBlue text-[10px] font-bold rounded-lg font-poppins">
-                      <ShieldCheck className="w-3 h-3 text-brandBlue" />
+                    <span key={i} className="inline-flex items-center gap-1 px-2 sm:px-2.5 py-1 bg-brandBlue/5 text-brandBlue text-[9px] sm:text-[10px] font-bold rounded-lg font-poppins">
+                      <ShieldCheck className="w-2.5 sm:w-3 h-2.5 sm:h-3 text-brandBlue" />
                       <span>{f}</span>
                     </span>
                   ))}
                 </div>
-                <div className="grid grid-cols-2 gap-3 pt-2">
+                <div className="grid grid-cols-2 gap-2 sm:gap-3 pt-2">
                   <button
                     onClick={() => setSelectedService(s)}
-                    className="py-2.5 text-center text-slate-700 bg-slate-100 hover:bg-slate-200 text-xs font-bold rounded-xl font-poppins transition-premium"
+                    className="py-2 sm:py-2.5 text-center text-slate-700 bg-slate-100 hover:bg-slate-200 text-[11px] sm:text-xs font-bold rounded-xl font-poppins transition-premium"
                   >
                     Learn Details
                   </button>
                   <button
                     onClick={() => openBookingModal(s.title)}
-                    className="py-2.5 text-center text-white bg-brandBlue hover:bg-brandNavy text-xs font-bold rounded-xl font-poppins transition-premium shadow-sm flex items-center justify-center gap-1"
+                    className="py-2 sm:py-2.5 text-center text-white bg-brandBlue hover:bg-brandNavy text-[11px] sm:text-xs font-bold rounded-xl font-poppins transition-premium shadow-sm flex items-center justify-center gap-1"
                   >
                     <span>Book Now</span>
-                    <ArrowRight className="w-3 h-3" />
+                    <ArrowRight className="w-2.5 sm:w-3 h-2.5 sm:h-3" />
                   </button>
                 </div>
               </div>
@@ -153,16 +152,16 @@ export const AmbulanceServices: React.FC = () => {
               initial={{ opacity: 0, scale: 0.95, y: 30 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 30 }}
-              className="bg-white rounded-3xl overflow-hidden shadow-2xl max-w-2xl w-full relative z-10 max-h-[85vh] overflow-y-auto"
+              className="bg-white rounded-3xl overflow-hidden shadow-2xl max-w-2xl w-full relative z-10 max-h-[85vh] overflow-y-auto mx-2 sm:mx-0"
             >
               <button
                 onClick={() => setSelectedService(null)}
-                className="absolute top-4 right-4 p-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-full transition-colors z-20"
+                className="absolute top-3 right-3 sm:top-4 sm:right-4 p-1.5 sm:p-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-full transition-colors z-20"
               >
-                <X className="w-5 h-5" />
+                <X className="w-4 sm:w-5 h-4 sm:h-5" />
               </button>
 
-              <div className="p-6 sm:p-8 pt-20 space-y-6">
+              <div className="p-5 sm:p-8 pt-16 sm:pt-20 space-y-4 sm:space-y-6">
                 <h2 className="text-2xl sm:text-3xl font-black text-brandNavy font-raleway">
                   {selectedService.title}
                 </h2>
@@ -229,32 +228,32 @@ export const AmbulanceServices: React.FC = () => {
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
-              className="bg-white rounded-3xl p-6 sm:p-8 shadow-2xl max-w-md w-full relative z-10"
+              className="bg-white rounded-3xl p-5 sm:p-8 shadow-2xl max-w-md w-full relative z-10 mx-2 sm:mx-0"
             >
               <button
                 onClick={() => setBookingModalOpen(false)}
-                className="absolute top-4 right-4 p-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-full transition-colors"
+                className="absolute top-3 right-3 sm:top-4 sm:right-4 p-1.5 sm:p-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-full transition-colors"
               >
-                <X className="w-5 h-5" />
+                <X className="w-4 sm:w-5 h-4 sm:h-5" />
               </button>
 
-              <h2 className="text-2xl font-extrabold text-brandNavy font-raleway mb-1">
+              <h2 className="text-xl sm:text-2xl font-extrabold text-brandNavy font-raleway mb-1">
                 Book: {bookingForm.serviceName}
               </h2>
-              <p className="text-xs text-slate-400 font-poppins mb-6">
+              <p className="text-[11px] sm:text-xs text-slate-400 font-poppins mb-4 sm:mb-6">
                 Fill the patient coordinates below.
               </p>
 
               {bookingSuccess ? (
-                <div className="text-center py-8 space-y-3">
-                  <span className="text-4xl">✅</span>
-                  <h3 className="text-xl font-bold text-slate-800 font-raleway">Booking Registered</h3>
-                  <p className="text-xs text-slate-500 font-poppins">
+                <div className="text-center py-6 sm:py-8 space-y-3">
+                  <span className="text-3xl sm:text-4xl">✅</span>
+                  <h3 className="text-lg sm:text-xl font-bold text-slate-800 font-raleway">Booking Registered</h3>
+                  <p className="text-[11px] sm:text-xs text-slate-500 font-poppins">
                     Dispatch desk will telephone you shortly to verify location and confirm standby availability.
                   </p>
                 </div>
               ) : (
-                <form onSubmit={handleBookingSubmit} className="space-y-4">
+                <form onSubmit={handleBookingSubmit} className="space-y-3 sm:space-y-4">
                   <input
                     type="text"
                     required

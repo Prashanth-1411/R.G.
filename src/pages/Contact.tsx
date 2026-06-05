@@ -37,20 +37,20 @@ export const Contact: React.FC = () => {
   return (
     <div className="pt-24 pb-20 bg-slate-50">
       {/* Banner */}
-      <div className="bg-brandNavy text-white py-16 mb-16 relative overflow-hidden">
+      <div className="bg-brandNavy text-white py-12 sm:py-16 mb-10 sm:mb-16 relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-brandNavy to-brandBlue/35 opacity-90 z-0"></div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <h1 className="text-4xl sm:text-5xl font-black font-raleway tracking-tight">{pageContent.title || "Contact Us"}</h1>
-          <p className="mt-4 text-slate-300 font-poppins text-sm max-w-xl">
+          <h1 className="text-3xl sm:text-5xl font-black font-raleway tracking-tight">{pageContent.title || "Contact Us"}</h1>
+          <p className="mt-3 sm:mt-4 text-slate-300 font-poppins text-xs sm:text-sm max-w-xl">
             {pageContent.description}
           </p>
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-stretch">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8 sm:space-y-12">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-12 items-stretch">
           {/* Form */}
-          <div className="lg:col-span-7 bg-white p-8 sm:p-10 rounded-3xl border border-slate-100 shadow-premium flex flex-col justify-between">
+          <div className="lg:col-span-7 bg-white p-6 sm:p-10 rounded-3xl border border-slate-100 shadow-premium flex flex-col justify-between">
             <div>
               <h2 className="text-2xl font-bold text-brandNavy font-raleway mb-2">Send an Inquiry</h2>
               <p className="text-xs text-slate-400 font-poppins mb-6">

@@ -105,13 +105,13 @@ export const Header: React.FC = () => {
             exit={{ opacity: 0, height: 0 }}
             className="md:hidden bg-white/95 border-b border-slate-100 shadow-xl overflow-hidden glass-nav"
           >
-            <div className="px-4 pt-2 pb-6 space-y-2">
+            <div className="px-4 pt-2 pb-6 space-y-1">
               {menuItems.map((item) => (
                 <Link
                   key={item.name}
                   to={item.path}
                   onClick={() => setIsOpen(false)}
-                  className={`block px-4 py-3 rounded-xl text-base font-bold tracking-wide transition-all ${
+                  className={`block px-4 py-2.5 rounded-xl text-sm font-bold tracking-wide transition-all ${
                     isActive(item.path)
                       ? 'bg-brandBlue/10 text-brandBlue'
                       : 'text-slate-800 hover:bg-slate-50 hover:text-brandBlue'
@@ -120,22 +120,21 @@ export const Header: React.FC = () => {
                   {item.name}
                 </Link>
               ))}
-              <div className="pt-4 border-t border-slate-100 flex flex-col space-y-3 px-4">
+              <div className="pt-3 border-t border-slate-100 flex flex-col space-y-2 px-4">
                 <a
                   href="tel:+917449177777"
-                  className="flex items-center justify-center gap-2 w-full py-3 bg-red-600 text-white rounded-xl font-bold shadow-lg shadow-red-500/20"
+                  className="flex items-center justify-center gap-2 w-full py-2.5 bg-red-600 text-white rounded-xl font-bold text-sm shadow-lg shadow-red-500/20"
                 >
-                  <Phone className="w-5 h-5 fill-white" />
+                  <Phone className="w-4 h-4 fill-white" />
                   <span>Call Emergency (24/7)</span>
                 </a>
                 <a
                   href="https://wa.me/917449177777?text=Emergency+Ambulance+Required"
                   target="_blank"
                   rel="noreferrer"
-                  className="flex items-center justify-center gap-2 w-full py-3 bg-emerald-600 text-white rounded-xl font-bold"
+                  className="flex items-center justify-center gap-2 w-full py-2.5 bg-emerald-600 text-white rounded-xl font-bold text-sm"
                 >
-                  {/* Whatsapp custom SVG icon */}
-                  <svg className="w-5 h-5 fill-white" viewBox="0 0 24 24">
+                  <svg className="w-4 h-4 fill-white" viewBox="0 0 24 24">
                     <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.724-1.455L0 24zm6.59-4.846c1.6.95 3.188 1.449 4.825 1.451 5.436 0 9.86-4.37 9.864-9.799.002-2.63-1.023-5.101-2.885-6.97C16.488 2.01 14.041 1 11.999 1c-5.437 0-9.862 4.37-9.866 9.8.001 1.77.472 3.498 1.362 5.031L2.493 20.3l4.154-1.146zm11.225-7.22c-.104-.176-.388-.282-.813-.495-.426-.213-2.52-1.24-2.91-1.382-.39-.142-.673-.213-.956.213-.283.425-1.098 1.382-1.347 1.666-.25.282-.497.319-.923.106-.426-.213-1.8-.663-3.43-2.113-1.27-1.13-2.128-2.527-2.378-2.952-.25-.425-.027-.655.186-.867.191-.191.425-.496.638-.744.213-.248.283-.425.426-.709.141-.283.07-.531-.035-.744-.106-.213-.956-2.302-1.31-3.153-.346-.832-.7-.72-1.028-.737-.266-.013-.57-.015-.875-.015-.304 0-.8.114-1.22.567-.419.453-1.6 1.56-1.6 3.805 0 2.246 1.637 4.417 1.862 4.721.225.304 3.224 4.922 7.81 6.904 1.09.471 1.943.753 2.61.964 1.096.347 2.095.298 2.88.18.877-.13 2.52-.103 2.878-.971.359-.868.359-1.614.25-1.767z" />
                   </svg>
                   <span>Chat on WhatsApp</span>

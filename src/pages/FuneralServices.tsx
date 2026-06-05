@@ -60,18 +60,18 @@ export const FuneralServices: React.FC = () => {
   return (
     <div className="pt-24 pb-20">
       {/* Banner */}
-      <div className="bg-brandNavy text-white py-16 mb-16 relative overflow-hidden">
+      <div className="bg-brandNavy text-white py-12 sm:py-16 mb-10 sm:mb-16 relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-brandNavy to-brandBlue/35 opacity-90 z-0"></div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <h1 className="text-4xl sm:text-5xl font-black font-raleway tracking-tight">{pageContent.title || "Funeral & Homage Care"}</h1>
-          <p className="mt-4 text-slate-300 font-poppins text-sm max-w-xl">
+          <h1 className="text-3xl sm:text-5xl font-black font-raleway tracking-tight">{pageContent.title || "Funeral & Homage Care"}</h1>
+          <p className="mt-3 sm:mt-4 text-slate-300 font-poppins text-xs sm:text-sm max-w-xl">
             {pageContent.description}
           </p>
         </div>
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8">
           {services.map((s, idx) => (
             <motion.div
               key={s.id}
@@ -92,41 +92,41 @@ export const FuneralServices: React.FC = () => {
                   </div>
                 </div>
 
-                <div className="p-6 space-y-4">
-                  <h3 className="text-xl font-bold text-brandNavy font-raleway group-hover:text-emerald-600 transition-colors">
+                <div className="p-5 sm:p-6 space-y-3 sm:space-y-4">
+                  <h3 className="text-lg sm:text-xl font-bold text-brandNavy font-raleway group-hover:text-emerald-600 transition-colors">
                     {s.title}
                   </h3>
-                  <p className="text-slate-500 font-poppins text-xs font-semibold uppercase tracking-wider">
+                  <p className="text-slate-500 font-poppins text-[10px] sm:text-xs font-semibold uppercase tracking-wider">
                     {s.short_description}
                   </p>
-                  <p className="text-slate-600 text-sm font-poppins line-clamp-3 text-justify">
+                  <p className="text-slate-600 text-xs sm:text-sm font-poppins line-clamp-3 text-justify">
                     {s.description}
                   </p>
                 </div>
               </div>
 
-              <div className="p-6 pt-0 space-y-3">
-                <div className="flex flex-wrap gap-2 mb-2">
+              <div className="p-5 sm:p-6 pt-0 space-y-3">
+                <div className="flex flex-wrap gap-1.5 sm:gap-2 mb-2">
                   {s.features.slice(0, 3).map((f, i) => (
-                    <span key={i} className="inline-flex items-center gap-1 px-2.5 py-1 bg-emerald-50 text-emerald-700 text-[10px] font-bold rounded-lg font-poppins">
-                      <ShieldCheck className="w-3 h-3 text-emerald-600" />
+                    <span key={i} className="inline-flex items-center gap-1 px-2 sm:px-2.5 py-1 bg-emerald-50 text-emerald-700 text-[9px] sm:text-[10px] font-bold rounded-lg font-poppins">
+                      <ShieldCheck className="w-2.5 sm:w-3 h-2.5 sm:h-3 text-emerald-600" />
                       <span>{f}</span>
                     </span>
                   ))}
                 </div>
-                <div className="grid grid-cols-2 gap-3 pt-2">
+                <div className="grid grid-cols-2 gap-2 sm:gap-3 pt-2">
                   <button
                     onClick={() => setSelectedService(s)}
-                    className="py-2.5 text-center text-slate-700 bg-slate-100 hover:bg-slate-200 text-xs font-bold rounded-xl font-poppins transition-premium"
+                    className="py-2 sm:py-2.5 text-center text-slate-700 bg-slate-100 hover:bg-slate-200 text-[11px] sm:text-xs font-bold rounded-xl font-poppins transition-premium"
                   >
                     Learn Details
                   </button>
                   <button
                     onClick={() => openBookingModal(s.title)}
-                    className="py-2.5 text-center text-white bg-emerald-600 hover:bg-emerald-700 text-xs font-bold rounded-xl font-poppins transition-premium shadow-sm flex items-center justify-center gap-1"
+                    className="py-2 sm:py-2.5 text-center text-white bg-emerald-600 hover:bg-emerald-700 text-[11px] sm:text-xs font-bold rounded-xl font-poppins transition-premium shadow-sm flex items-center justify-center gap-1"
                   >
                     <span>Book Service</span>
-                    <ArrowRight className="w-3 h-3" />
+                    <ArrowRight className="w-2.5 sm:w-3 h-2.5 sm:h-3" />
                   </button>
                 </div>
               </div>
@@ -151,34 +151,24 @@ export const FuneralServices: React.FC = () => {
               initial={{ opacity: 0, scale: 0.95, y: 30 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 30 }}
-              className="bg-white rounded-3xl overflow-hidden shadow-2xl max-w-2xl w-full relative z-10 max-h-[85vh] overflow-y-auto"
+              className="bg-white rounded-3xl overflow-hidden shadow-2xl max-w-2xl w-full relative z-10 max-h-[85vh] overflow-y-auto mx-2 sm:mx-0"
             >
               <button
                 onClick={() => setSelectedService(null)}
-                className="absolute top-4 right-4 p-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-full transition-colors z-20"
+                className="absolute top-3 right-3 sm:top-4 sm:right-4 p-1.5 sm:p-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-full transition-colors z-20"
               >
-                <X className="w-5 h-5" />
+                <X className="w-4 sm:w-5 h-4 sm:h-5" />
               </button>
 
-              <div className="relative h-64 sm:h-72">
-                <img
-                  src={getImage(selectedService.image_path)}
-                  alt={selectedService.title}
-                  className="w-full h-full object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex items-end p-6">
-                  <h2 className="text-2xl sm:text-3xl font-black text-white font-raleway">
-                    {selectedService.title}
-                  </h2>
-                </div>
-              </div>
-
-              <div className="p-6 sm:p-8 space-y-6">
+              <div className="p-5 sm:p-8 pt-16 sm:pt-20 space-y-4 sm:space-y-6">
+                <h2 className="text-xl sm:text-3xl font-black text-brandNavy font-raleway">
+                  {selectedService.title}
+                </h2>
                 <div className="space-y-2">
                   <h4 className="text-xs uppercase font-extrabold tracking-widest text-emerald-600 font-poppins">
                     Homage Arrangements & Description
                   </h4>
-                  <p className="text-slate-600 text-sm leading-relaxed font-poppins text-justify">
+                  <p className="text-slate-600 text-xs sm:text-sm leading-relaxed font-poppins text-justify">
                     {selectedService.description}
                   </p>
                 </div>
@@ -189,28 +179,28 @@ export const FuneralServices: React.FC = () => {
                   </h4>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                     {selectedService.features.map((f, i) => (
-                      <div key={i} className="flex items-center gap-2 text-slate-700 text-sm font-semibold font-poppins">
-                        <Heart className="w-4 h-4 text-emerald-600 fill-emerald-100 shrink-0" />
+                      <div key={i} className="flex items-center gap-2 text-slate-700 text-xs sm:text-sm font-semibold font-poppins">
+                        <Heart className="w-3.5 sm:w-4 h-3.5 sm:h-4 text-emerald-600 fill-emerald-100 shrink-0" />
                         <span>{f}</span>
                       </div>
                     ))}
                   </div>
                 </div>
 
-                <div className="pt-4 flex gap-4">
+                <div className="pt-4 flex flex-col sm:flex-row gap-3 sm:gap-4">
                   <button
                     onClick={() => {
                       const svc = selectedService.title;
                       setSelectedService(null);
                       openBookingModal(svc);
                     }}
-                    className="flex-1 py-3.5 bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold rounded-xl text-sm transition-premium text-center shadow-md shadow-emerald-600/15"
+                    className="flex-1 py-3 sm:py-3.5 bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold rounded-xl text-xs sm:text-sm transition-premium text-center shadow-md shadow-emerald-600/15"
                   >
                     Arrange Service
                   </button>
                   <a
                     href="tel:+917449177777"
-                    className="px-6 py-3.5 bg-red-600 hover:bg-red-700 text-white font-extrabold rounded-xl text-sm transition-premium text-center shadow-md shadow-red-500/15"
+                    className="flex-1 px-6 py-3 sm:py-3.5 bg-red-600 hover:bg-red-700 text-white font-extrabold rounded-xl text-xs sm:text-sm transition-premium text-center shadow-md shadow-red-500/15"
                   >
                     24/7 Support Desk
                   </a>
@@ -237,32 +227,32 @@ export const FuneralServices: React.FC = () => {
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
-              className="bg-white rounded-3xl p-6 sm:p-8 shadow-2xl max-w-md w-full relative z-10"
+              className="bg-white rounded-3xl p-5 sm:p-8 shadow-2xl max-w-md w-full relative z-10 mx-2 sm:mx-0"
             >
               <button
                 onClick={() => setBookingModalOpen(false)}
-                className="absolute top-4 right-4 p-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-full transition-colors"
+                className="absolute top-3 right-3 sm:top-4 sm:right-4 p-1.5 sm:p-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-full transition-colors"
               >
-                <X className="w-5 h-5" />
+                <X className="w-4 sm:w-5 h-4 sm:h-5" />
               </button>
 
-              <h2 className="text-2xl font-extrabold text-brandNavy font-raleway mb-1">
+              <h2 className="text-xl sm:text-2xl font-extrabold text-brandNavy font-raleway mb-1">
                 Book: {bookingForm.serviceName}
               </h2>
-              <p className="text-xs text-slate-400 font-poppins mb-6">
+              <p className="text-[11px] sm:text-xs text-slate-400 font-poppins mb-4 sm:mb-6">
                 Fill the coordinates below for homage arrangements.
               </p>
 
               {bookingSuccess ? (
-                <div className="text-center py-8 space-y-3">
-                  <span className="text-4xl">✅</span>
-                  <h3 className="text-xl font-bold text-slate-800 font-raleway">Inquiry Saved</h3>
-                  <p className="text-xs text-slate-500 font-poppins">
+                <div className="text-center py-6 sm:py-8 space-y-3">
+                  <span className="text-3xl sm:text-4xl">✅</span>
+                  <h3 className="text-lg sm:text-xl font-bold text-slate-800 font-raleway">Inquiry Saved</h3>
+                  <p className="text-[11px] sm:text-xs text-slate-500 font-poppins">
                     A funeral coordinator will contact you immediately to assist with caskets, timing, and route details.
                   </p>
                 </div>
               ) : (
-                <form onSubmit={handleBookingSubmit} className="space-y-4">
+                <form onSubmit={handleBookingSubmit} className="space-y-3 sm:space-y-4">
                   <input
                     type="text"
                     required

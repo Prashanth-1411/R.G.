@@ -38,11 +38,11 @@ export const Blog: React.FC = () => {
   return (
     <div className="pt-24 pb-20">
       {/* Banner */}
-      <div className="bg-brandNavy text-white py-16 mb-16 relative overflow-hidden">
+      <div className="bg-brandNavy text-white py-12 sm:py-16 mb-10 sm:mb-16 relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-brandNavy to-brandBlue/35 opacity-90 z-0"></div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <h1 className="text-4xl sm:text-5xl font-black font-raleway tracking-tight">{pageContent.title || "Health & Homage Blog"}</h1>
-          <p className="mt-4 text-slate-300 font-poppins text-sm max-w-xl">
+          <h1 className="text-3xl sm:text-5xl font-black font-raleway tracking-tight">{pageContent.title || "Health & Homage Blog"}</h1>
+          <p className="mt-3 sm:mt-4 text-slate-300 font-poppins text-xs sm:text-sm max-w-xl">
             {pageContent.description}
           </p>
         </div>

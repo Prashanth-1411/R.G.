@@ -80,28 +80,28 @@ export const LocationPage: React.FC = () => {
   return (
     <div className="pt-24 pb-20 bg-slate-50">
       {/* Location Banner */}
-      <div className="bg-[#0A1F44] text-white py-16 mb-16 relative overflow-hidden">
+      <div className="bg-[#0A1F44] text-white py-12 sm:py-16 mb-10 sm:mb-16 relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-brandNavy to-brandBlue/30 z-0"></div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="flex items-center gap-2 text-brandBlue text-xs uppercase font-extrabold tracking-widest mb-3">
-            <MapPin className="w-4 h-4 fill-brandBlue/20 text-brandBlue" />
+          <div className="flex items-center gap-2 text-brandBlue text-[10px] sm:text-xs uppercase font-extrabold tracking-widest mb-2 sm:mb-3">
+            <MapPin className="w-3.5 sm:w-4 h-3.5 sm:h-4 fill-brandBlue/20 text-brandBlue" />
             <span>Chennai Standby Station</span>
           </div>
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black font-raleway leading-tight">
+          <h1 className="text-2xl sm:text-4xl lg:text-5xl font-black font-raleway leading-tight">
             Ambulance Service in <span className="text-brandBlue">{locationData.name}</span>
           </h1>
-          <p className="mt-4 text-slate-300 font-poppins text-xs sm:text-sm max-w-2xl text-justify">
+          <p className="mt-3 sm:mt-4 text-slate-300 font-poppins text-xs sm:text-sm max-w-2xl text-justify">
             {locationData.description}
           </p>
         </div>
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-12 items-start">
           {/* Left Block: Dynamic Content & FAQs */}
-          <div className="lg:col-span-8 space-y-12">
+          <div className="lg:col-span-8 space-y-8 sm:space-y-12">
             {/* Rich HTML SEO Content */}
-            <div className="bg-white p-8 rounded-3xl shadow-premium border border-slate-100 prose max-w-none prose-slate">
+            <div className="bg-white p-5 sm:p-8 rounded-3xl shadow-premium border border-slate-100 prose max-w-none prose-slate">
               <div 
                 className="font-poppins text-slate-600 text-sm sm:text-base leading-relaxed space-y-4 text-justify"
                 dangerouslySetInnerHTML={{ __html: locationData.content_html }} 
@@ -120,19 +120,19 @@ export const LocationPage: React.FC = () => {
                       key={idx}
                       className="bg-white rounded-2xl border border-slate-150 overflow-hidden shadow-sm"
                     >
-                      <button
-                        onClick={() => setActiveFaq(activeFaq === idx ? null : idx)}
-                        className="w-full px-6 py-4 text-left font-bold text-brandNavy text-sm sm:text-base flex items-center justify-between font-raleway hover:bg-slate-50 transition-colors"
-                      >
-                        <span>{faq.question}</span>
-                        <ChevronDown className={`w-5 h-5 text-slate-400 shrink-0 transition-transform duration-300 ${activeFaq === idx ? 'rotate-180' : ''}`} />
-                      </button>
-                      
-                      {activeFaq === idx && (
-                        <div className="px-6 pb-5 pt-1 text-slate-500 font-poppins text-xs sm:text-sm leading-relaxed border-t border-slate-100 text-justify">
-                          {faq.answer}
-                        </div>
-                      )}
+                  <button
+                    onClick={() => setActiveFaq(activeFaq === idx ? null : idx)}
+                    className="w-full px-4 sm:px-6 py-3 sm:py-4 text-left font-bold text-brandNavy text-xs sm:text-base flex items-center justify-between font-raleway hover:bg-slate-50 transition-colors"
+                  >
+                    <span className="pr-2">{faq.question}</span>
+                    <ChevronDown className={`w-4 sm:w-5 h-4 sm:h-5 text-slate-400 shrink-0 transition-transform duration-300 ${activeFaq === idx ? 'rotate-180' : ''}`} />
+                  </button>
+                  
+                  {activeFaq === idx && (
+                    <div className="px-4 sm:px-6 pb-4 sm:pb-5 pt-1 text-slate-500 font-poppins text-xs sm:text-sm leading-relaxed border-t border-slate-100 text-justify">
+                      {faq.answer}
+                    </div>
+                  )}
                     </div>
                   ))}
                 </div>

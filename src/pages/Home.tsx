@@ -184,18 +184,18 @@ export const Home: React.FC = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.4 }}
-                className="flex flex-wrap gap-4 pt-2"
+                className="flex flex-col sm:flex-row gap-3 sm:gap-4 pt-2"
               >
                 <a
                   href="tel:+917449177777"
-                  className="flex items-center gap-2 px-8 py-4 bg-brandBlue hover:bg-brandNavy text-white font-extrabold rounded-full shadow-lg shadow-brandBlue/20 hover:scale-105 transition-premium duration-300"
+                  className="flex items-center justify-center gap-2 w-full sm:w-auto px-6 sm:px-8 py-3.5 sm:py-4 bg-brandBlue hover:bg-brandNavy text-white font-extrabold rounded-full shadow-lg shadow-brandBlue/20 hover:scale-105 transition-premium duration-300 text-sm sm:text-base"
                 >
                   <Phone className="w-5 h-5 fill-white" />
                   <span>Call: +91 74491 77777</span>
                 </a>
                 <a
                   href="#booking-sec"
-                  className="flex items-center gap-2 px-8 py-4 bg-white hover:bg-slate-50 text-brandNavy font-extrabold rounded-full border-2 border-slate-200 shadow-sm hover:scale-105 transition-premium duration-300"
+                  className="flex items-center justify-center gap-2 w-full sm:w-auto px-6 sm:px-8 py-3.5 sm:py-4 bg-white hover:bg-slate-50 text-brandNavy font-extrabold rounded-full border-2 border-slate-200 shadow-sm hover:scale-105 transition-premium duration-300 text-sm sm:text-base"
                 >
                   <Calendar className="w-5 h-5" />
                   <span>Book Ambulance</span>
@@ -223,9 +223,9 @@ export const Home: React.FC = () => {
       </section>
 
       {/* 2. Statistics Counter Section */}
-      <section className="bg-slate-50 py-16">
+      <section className="bg-slate-50 py-12 sm:py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-8">
             <AnimatedCounter end={parseInt(pageContent.experience_years) || 48} label="Years of Experience" suffix="+" />
             <AnimatedCounter end={parseInt(pageContent.vehicles_count) || 34} label="Active Medical Vehicles" suffix="+" />
             <AnimatedCounter end={parseInt(pageContent.happy_clients) || 8000} label="Happy Patients Transferred" suffix="+" />
@@ -235,10 +235,10 @@ export const Home: React.FC = () => {
       </section>
 
       {/* 3. Services Section */}
-      <section className="py-20 bg-white">
+      <section className="py-12 sm:py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-2xl mx-auto mb-16">
-            <h2 className="text-3xl font-extrabold text-brandNavy tracking-tight font-raleway sm:text-4xl">
+          <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-16">
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-brandNavy tracking-tight font-raleway sm:text-4xl">
               Our Medical & Funeral Services
             </h2>
             <p className="mt-4 text-slate-500 font-poppins text-sm leading-relaxed">
@@ -305,10 +305,10 @@ export const Home: React.FC = () => {
       </section>
 
       {/* 4. Booking Form Section */}
-      <section id="booking-sec" className="py-20 bg-[#0A1F44] text-white relative">
+      <section id="booking-sec" className="py-12 sm:py-20 bg-[#0A1F44] text-white relative">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-extrabold tracking-tight font-raleway sm:text-4xl">
+          <div className="text-center mb-8 sm:mb-12">
+            <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight font-raleway sm:text-4xl">
               24/7 Digital Booking System
             </h2>
             <p className="mt-4 text-slate-400 font-poppins text-sm leading-relaxed">
@@ -438,28 +438,27 @@ export const Home: React.FC = () => {
       </section>
 
       {/* 5. Chennai Service Area local links */}
-      <section className="py-20 bg-slate-50">
+      <section className="py-12 sm:py-20 bg-slate-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-2xl mx-auto mb-12">
-            <h2 className="text-3xl font-extrabold text-brandNavy font-raleway sm:text-4xl">
+          <div className="text-center max-w-2xl mx-auto mb-8 sm:mb-12">
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-brandNavy font-raleway sm:text-4xl">
               Our Chennai Coverage Areas
             </h2>
-            <p className="mt-4 text-slate-500 font-poppins text-sm leading-relaxed">
-              We operate emergency ambulance standby bays across 100+ Chennai locations to reduce dispatch delays. Click a location below for specific local details.
+            <p className="mt-3 sm:mt-4 text-slate-500 font-poppins text-xs sm:text-sm leading-relaxed px-2">
+              We operate emergency ambulance standby bays across 100+ Chennai locations to reduce dispatch delays.
             </p>
-            {/* Search filter for locations */}
-            <div className="mt-6 max-w-md mx-auto">
+            <div className="mt-4 sm:mt-6 max-w-md mx-auto px-4 sm:px-0">
               <input
                 type="text"
                 placeholder="Search your location..."
                 value={searchLocation}
                 onChange={e => { setSearchLocation(e.target.value); setShowAllLocations(true); }}
-                className="w-full px-4 py-2 border border-slate-200 rounded-xl focus:border-brandBlue focus:outline-none bg-white text-sm"
+                className="w-full px-4 py-2.5 sm:py-2 border border-slate-200 rounded-xl focus:border-brandBlue focus:outline-none bg-white text-sm"
               />
             </div>
           </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 sm:gap-4">
             {displayedLocations.map((loc, idx) => (
               <Link
                 key={idx}
@@ -485,20 +484,20 @@ export const Home: React.FC = () => {
       </section>
 
       {/* 6. General Get in Touch Section */}
-      <section className="py-20 bg-white">
+      <section className="py-12 sm:py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-2xl mx-auto mb-16">
-            <h2 className="text-3xl font-extrabold text-brandNavy font-raleway sm:text-4xl">
+          <div className="text-center max-w-2xl mx-auto mb-8 sm:mb-16">
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-brandNavy font-raleway sm:text-4xl">
               Get in Touch
             </h2>
-            <p className="mt-4 text-slate-500 font-poppins text-sm leading-relaxed">
+            <p className="mt-3 sm:mt-4 text-slate-500 font-poppins text-xs sm:text-sm leading-relaxed">
               Questions, comments or special requests? We are here to help. Reach out to us.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-stretch">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-12 items-stretch">
             {/* Contact Form */}
-            <div className="lg:col-span-6 bg-slate-50 p-8 sm:p-10 rounded-3xl border border-slate-100 flex flex-col justify-between">
+            <div className="lg:col-span-6 bg-slate-50 p-6 sm:p-10 rounded-3xl border border-slate-100 flex flex-col justify-between">
               {contactSuccess ? (
                 <div className="bg-emerald-50 border border-emerald-200 rounded-2xl p-8 text-center my-auto">
                   <span className="text-4xl block mb-2">📩</span>
