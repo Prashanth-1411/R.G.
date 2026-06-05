@@ -1,16 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import axios from 'axios';
-import { motion } from 'framer-motion';
-import { MapPin, Phone, MessageSquare, ShieldCheck, ChevronDown, Calendar, AlertCircle } from 'lucide-react';
-import { ServiceArea, Testimonial } from '../types';
+import { MapPin, Phone, MessageSquare, ChevronDown, Calendar, AlertCircle } from 'lucide-react';
+import { serviceAreas } from '../data/service-areas';
 
 export const LocationPage: React.FC = () => {
   const { locationSlug } = useParams<{ locationSlug: string }>();
-  const [locationData, setLocationData] = useState<ServiceArea | null>(null);
-  const [loading, setLoading] = useState(true);
   const [activeFaq, setActiveFaq] = useState<number | null>(null);
-  const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
 
   // Booking Form State
   const [bookingForm, setBookingForm] = useState({
@@ -24,70 +19,40 @@ export const LocationPage: React.FC = () => {
   });
   const [bookingSuccess, setBookingSuccess] = useState(false);
 
+  const fullSlug = locationSlug?.startsWith('ambulance-service-in-') 
+    ? locationSlug 
+    : `ambulance-service-in-${locationSlug}`;
+
+  const locationData = useMemo(
+    () => serviceAreas.find(s => s.slug === fullSlug) ?? null,
+    [fullSlug]
+  );
+
   useEffect(() => {
-    setLoading(true);
-    // Standardize slug matching the seeder
-    const fullSlug = locationSlug?.startsWith('ambulance-service-in-') 
-      ? locationSlug 
-      : `ambulance-service-in-${locationSlug}`;
-
-    axios.get(`http://localhost:8000/api/public/service-areas/${fullSlug}/`)
-      .then(response => {
-        const data = response.data;
-        setLocationData(data);
-        
-        // Dynamically update SEO tags
-        document.title = data.meta_title || `Ambulance Service in ${data.name} | Flying Squad`;
-        
-        // Description tag update
-        let metaDesc = document.querySelector('meta[name="description"]');
-        if (!metaDesc) {
-          metaDesc = document.createElement('meta');
-          metaDesc.setAttribute('name', 'description');
-          document.head.appendChild(metaDesc);
-        }
-        metaDesc.setAttribute('content', data.meta_description || `Emergency ICU and Ventilator ambulance services in ${data.name}.`);
-
-        setLoading(false);
-      })
-      .catch(error => {
-        console.error("Failed to load service area details", error);
-        setLoading(false);
-      });
-
-    // Load testimonials
-    axios.get('http://localhost:8000/api/public/testimonials/')
-      .then(r => setTestimonials(r.data.slice(0, 3)))
-      .catch(e => console.error(e));
-  }, [locationSlug]);
-
-  const handleBookingSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    try {
-      await axios.post('http://localhost:8000/api/public/bookings/create/', {
-        name: bookingForm.name,
-        phone: bookingForm.phone,
-        pickup_location: bookingForm.pickup || locationData?.name || '',
-        destination: bookingForm.destination,
-        service_type: 'Ambulance',
-        service_name: bookingForm.serviceName,
-        booking_date: bookingForm.date,
-        notes: bookingForm.notes
-      });
-      setBookingSuccess(true);
-      setBookingForm({
-        name: '',
-        phone: '',
-        pickup: '',
-        destination: '',
-        serviceName: 'ICU Plus Ambulance',
-        date: new Date().toISOString().split('T')[0],
-        notes: ''
-      });
-    } catch (err) {
-      console.error(err);
-      alert("Submission failed. Call our dispatch hotline directly.");
+    if (locationData) {
+      document.title = locationData.meta_title || `Ambulance Service in ${locationData.name} | Flying Squad`;
+      let metaDesc = document.querySelector('meta[name="description"]');
+      if (!metaDesc) {
+        metaDesc = document.createElement('meta');
+        metaDesc.setAttribute('name', 'description');
+        document.head.appendChild(metaDesc);
+      }
+      metaDesc.setAttribute('content', locationData.meta_description || `Emergency ICU and Ventilator ambulance services in ${locationData.name}.`);
     }
+  }, [locationData]);
+
+  const handleBookingSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setBookingSuccess(true);
+    setBookingForm({
+      name: '',
+      phone: '',
+      pickup: '',
+      destination: '',
+      serviceName: 'ICU Plus Ambulance',
+      date: new Date().toISOString().split('T')[0],
+      notes: ''
+    });
   };
 
   const handleWhatsAppClick = () => {
@@ -96,14 +61,6 @@ export const LocationPage: React.FC = () => {
     const text = `Hi Flying Squad, I need to book an ambulance in ${locationData.name}. Please connect me with the dispatch desk immediately.`;
     window.open(`https://wa.me/${phone}?text=${encodeURIComponent(text)}`, '_blank');
   };
-
-  if (loading) {
-    return (
-      <div className="min-h-[70vh] flex items-center justify-center pt-24">
-        <div className="w-10 h-10 border-4 border-brandBlue border-t-transparent rounded-full animate-spin"></div>
-      </div>
-    );
-  }
 
   if (!locationData) {
     return (

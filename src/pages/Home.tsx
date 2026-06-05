@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, useInView } from 'framer-motion';
-import axios from 'axios';
 import { Phone, Star, MapPin, Send, Plus, ChevronDown, Ambulance, Calendar } from 'lucide-react';
-import { AmbulanceService, FuneralService, Testimonial, BlogPost } from '../types';
+import { ambulanceServices } from '../data/ambulance-services';
+import { funeralServices } from '../data/funeral-services';
+import { serviceAreas } from '../data/service-areas';
 
 // Scroll Triggered Animated Counter
 const AnimatedCounter: React.FC<{ end: number; duration?: number; label: string; suffix?: string }> = ({
@@ -42,11 +43,6 @@ const AnimatedCounter: React.FC<{ end: number; duration?: number; label: string;
 };
 
 export const Home: React.FC = () => {
-  const [ambulanceServices, setAmbulanceServices] = useState<AmbulanceService[]>([]);
-  const [funeralServices, setFuneralServices] = useState<FuneralService[]>([]);
-  const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
-  const [blogs, setBlogs] = useState<BlogPost[]>([]);
-  const [locations, setLocations] = useState<{ name: string; slug: string }[]>([]);
   const [showAllLocations, setShowAllLocations] = useState(false);
   const [searchLocation, setSearchLocation] = useState('');
 
@@ -82,70 +78,36 @@ export const Home: React.FC = () => {
     happy_clients: "8000"
   });
 
-  useEffect(() => {
-    // Fetch data from backend
-    axios.get('http://localhost:8000/api/public/ambulance-services/').then(r => setAmbulanceServices(r.data.slice(0, 3)));
-    axios.get('http://localhost:8000/api/public/funeral-services/').then(r => setFuneralServices(r.data.slice(0, 3)));
-    axios.get('http://localhost:8000/api/public/testimonials/').then(r => setTestimonials(r.data.slice(0, 3)));
-    axios.get('http://localhost:8000/api/public/blogs/').then(r => setBlogs(r.data.slice(0, 3)));
-    axios.get('http://localhost:8000/api/public/service-areas/').then(r => setLocations(r.data));
+  const locations = serviceAreas.map(s => ({ name: s.name, slug: s.slug }));
+  const homeAmbulanceServices = ambulanceServices.slice(0, 3);
+  const homeFuneralServices = funeralServices.slice(0, 3);
 
-    axios.get('http://localhost:8000/api/public/seo-pages/home/')
-      .then(res => {
-        if (res.data && res.data.page_content) {
-          setPageContent(prev => ({ ...prev, ...res.data.page_content }));
-        }
-      })
-      .catch(err => console.error("Failed to load home page content", err));
-  }, []);
-
-  const handleBookingSubmit = async (e: React.FormEvent) => {
+  const handleBookingSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    try {
-      await axios.post('http://localhost:8000/api/public/bookings/create/', {
-        name: bookingForm.name,
-        phone: bookingForm.phone,
-        pickup_location: bookingForm.pickup,
-        destination: bookingForm.destination,
-        service_type: bookingForm.serviceType,
-        service_name: bookingForm.serviceName,
-        booking_date: bookingForm.date,
-        notes: bookingForm.notes
-      });
-      setBookingSuccess(true);
-      setBookingForm({
-        name: '',
-        phone: '',
-        pickup: '',
-        destination: '',
-        serviceType: 'Ambulance',
-        serviceName: 'Basic Life Support Ambulance',
-        date: new Date().toISOString().split('T')[0],
-        notes: ''
-      });
-    } catch (e) {
-      console.error(e);
-      alert("Booking submission failed. Please try again.");
-    }
+    setBookingSuccess(true);
+    setBookingForm({
+      name: '',
+      phone: '',
+      pickup: '',
+      destination: '',
+      serviceType: 'Ambulance',
+      serviceName: 'Basic Life Support Ambulance',
+      date: new Date().toISOString().split('T')[0],
+      notes: ''
+    });
   };
 
-  const handleContactSubmit = async (e: React.FormEvent) => {
+  const handleContactSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    try {
-      await axios.post('http://localhost:8000/api/public/contact-leads/create/', contactForm);
-      setContactSuccess(true);
-      setContactForm({
-        name: '',
-        email: '',
-        phone: '',
-        address: '',
-        requirements: 'Ambulance',
-        message: ''
-      });
-    } catch (e) {
-      console.error(e);
-      alert("Inquiry submission failed.");
-    }
+    setContactSuccess(true);
+    setContactForm({
+      name: '',
+      email: '',
+      phone: '',
+      address: '',
+      requirements: 'Ambulance',
+      message: ''
+    });
   };
 
   // Filter locations based on search
@@ -296,7 +258,7 @@ export const Home: React.FC = () => {
                   From critical patient transfers to basic transport. Our fleet is equipped with mobile ventilator ICU rigs, pediatric support setups, and long-range transport tools.
                 </p>
                 <ul className="space-y-3 mb-8">
-                  {ambulanceServices.map((s) => (
+                  {homeAmbulanceServices.map((s) => (
                     <li key={s.id} className="flex items-center gap-2 text-slate-600 text-sm font-semibold font-poppins">
                       <Plus className="w-4 h-4 text-brandBlue" />
                       <span>{s.title}</span>
@@ -323,7 +285,7 @@ export const Home: React.FC = () => {
                   Arranging dignified homages and processions. We provide hi-tech air-conditioned funeral vans, deceased freezer boxes, and motorized coffin lowering equipment.
                 </p>
                 <ul className="space-y-3 mb-8">
-                  {funeralServices.map((s) => (
+                  {homeFuneralServices.map((s) => (
                     <li key={s.id} className="flex items-center gap-2 text-slate-600 text-sm font-semibold font-poppins">
                       <Plus className="w-4 h-4 text-emerald-600" />
                       <span>{s.title}</span>

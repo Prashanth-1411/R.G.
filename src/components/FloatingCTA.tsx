@@ -1,27 +1,13 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
-import axios from 'axios';
 import { Phone, MessageSquare } from 'lucide-react';
 
 export const FloatingCTA: React.FC = () => {
   const location = useLocation();
 
-  const handleWhatsAppClick = async () => {
+  const handleWhatsAppClick = () => {
     const phoneNumber = '917449177777';
     const prefilledText = `Hi Flying Squad, I am visiting the website page (${window.location.origin}${location.pathname}) and need emergency assistance or booking details. Please reply.`;
-    
-    // Log the click lead in backend
-    try {
-      await axios.post('http://localhost:8000/api/public/whatsapp-leads/track/', {
-        phone: 'Visitor Click',
-        source_page: location.pathname,
-        prefilled_message: prefilledText
-      });
-    } catch (error) {
-      console.error("Failed to track WhatsApp lead", error);
-    }
-
-    // Redirect to whatsapp
     const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(prefilledText)}`;
     window.open(whatsappUrl, '_blank');
   };

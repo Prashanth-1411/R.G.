@@ -1,33 +1,14 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Star, MessageSquare, ExternalLink } from 'lucide-react';
-import { Testimonial } from '../types';
+import { testimonials } from '../data/testimonials';
 
 export const Testimonials: React.FC = () => {
-  const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
-  const [pageContent, setPageContent] = useState<Record<string, string>>({
+  const [testimonialsList] = useState(testimonials);
+  const [pageContent] = useState<Record<string, string>>({
     title: "Google Reviews & Feedback",
     description: "Read stories of prompt deliveries, life-saving transfers, and compassionate family support from those who have trusted us."
   });
-
-  useEffect(() => {
-    axios.get('http://localhost:8000/api/public/testimonials/')
-      .then(response => {
-        setTestimonials(response.data);
-      })
-      .catch(error => {
-        console.error("Failed to load testimonials", error);
-      });
-
-    axios.get('http://localhost:8000/api/public/seo-pages/testimonials/')
-      .then(res => {
-        if (res.data && res.data.page_content) {
-          setPageContent(prev => ({ ...prev, ...res.data.page_content }));
-        }
-      })
-      .catch(err => console.error("Failed to load testimonials page content", err));
-  }, []);
 
   return (
     <div className="pt-24 pb-20">
@@ -77,8 +58,8 @@ export const Testimonials: React.FC = () => {
         </div>
 
         {/* Testimonials Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {testimonials.map((t, idx) => (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
+          {testimonialsList.map((t, idx) => (
             <motion.div
               key={t.id}
               initial={{ opacity: 0, y: 30 }}

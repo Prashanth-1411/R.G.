@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { useState } from 'react';
 import { Phone, Mail, MapPin, Send } from 'lucide-react';
 
 export const Contact: React.FC = () => {
@@ -12,7 +11,7 @@ export const Contact: React.FC = () => {
     message: ''
   });
   const [success, setSuccess] = useState(false);
-  const [pageContent, setPageContent] = useState<Record<string, string>>({
+  const [pageContent] = useState<Record<string, string>>({
     title: "Contact Us 24/7",
     subtitle: "Always Ready to Assist",
     description: "Have any queries or need a specific quote? Our dispatch coordinator desk is active 24/7. Call or write us today.",
@@ -22,33 +21,17 @@ export const Contact: React.FC = () => {
     phone_2: "+91 84280 77777",
   });
 
-  useEffect(() => {
-    axios.get('http://localhost:8000/api/public/seo-pages/contact/')
-      .then(res => {
-        if (res.data && res.data.page_content) {
-          setPageContent(prev => ({ ...prev, ...res.data.page_content }));
-        }
-      })
-      .catch(err => console.error("Failed to load contact page content", err));
-  }, []);
-
-  const handleContactSubmit = async (e: React.FormEvent) => {
+  const handleContactSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    try {
-      await axios.post('http://localhost:8000/api/public/contact-leads/create/', contactForm);
-      setSuccess(true);
-      setContactForm({
-        name: '',
-        email: '',
-        phone: '',
-        address: '',
-        requirements: 'Ambulance',
-        message: ''
-      });
-    } catch (e) {
-      console.error(e);
-      alert("Inquiry submission failed. Please try again.");
-    }
+    setSuccess(true);
+    setContactForm({
+      name: '',
+      email: '',
+      phone: '',
+      address: '',
+      requirements: 'Ambulance',
+      message: ''
+    });
   };
 
   return (

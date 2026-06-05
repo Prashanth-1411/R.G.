@@ -1,12 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ShieldCheck, ArrowRight, Ambulance, Heart, X } from 'lucide-react';
-import { AmbulanceService } from '../types';
+import { ambulanceServices } from '../data/ambulance-services';
 
 export const AmbulanceServices: React.FC = () => {
-  const [services, setServices] = useState<AmbulanceService[]>([]);
-  const [selectedService, setSelectedService] = useState<AmbulanceService | null>(null);
+  const [services] = useState(ambulanceServices);
+  const [selectedService, setSelectedService] = useState<typeof ambulanceServices[number] | null>(null);
   
   // Booking Trigger Modal State
   const [bookingModalOpen, setBookingModalOpen] = useState(false);
@@ -20,66 +19,32 @@ export const AmbulanceServices: React.FC = () => {
     notes: ''
   });
   const [bookingSuccess, setBookingSuccess] = useState(false);
-  const [pageContent, setPageContent] = useState<Record<string, string>>({
+  const [pageContent] = useState<Record<string, string>>({
     title: "Ambulance Fleet",
     description: "Our comprehensive medical fleet is ready 24/7, providing certified Basic Life Support, neonatal incubators, high-flow ventilators, and interstate transits."
   });
-
-  useEffect(() => {
-    axios.get('http://localhost:8000/api/public/ambulance-services/')
-      .then(response => {
-        setServices(response.data);
-      })
-      .catch(error => {
-        console.error("Failed to load ambulance services", error);
-      });
-
-    axios.get('http://localhost:8000/api/public/seo-pages/ambulance/')
-      .then(res => {
-        if (res.data && res.data.page_content) {
-          setPageContent(prev => ({ ...prev, ...res.data.page_content }));
-        }
-      })
-      .catch(err => console.error("Failed to load ambulance page content", err));
-  }, []);
 
   const openBookingModal = (serviceTitle: string) => {
     setBookingForm(prev => ({ ...prev, serviceName: serviceTitle }));
     setBookingModalOpen(true);
   };
 
-  const handleBookingSubmit = async (e: React.FormEvent) => {
+  const handleBookingSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    try {
-      await axios.post('http://localhost:8000/api/public/bookings/create/', {
-        name: bookingForm.name,
-        phone: bookingForm.phone,
-        pickup_location: bookingForm.pickup,
-        destination: bookingForm.destination,
-        service_type: 'Ambulance',
-        service_name: bookingForm.serviceName,
-        booking_date: bookingForm.date,
-        notes: bookingForm.notes
+    setBookingSuccess(true);
+    setTimeout(() => {
+      setBookingSuccess(false);
+      setBookingModalOpen(false);
+      setBookingForm({
+        name: '',
+        phone: '',
+        pickup: '',
+        destination: '',
+        serviceName: '',
+        date: new Date().toISOString().split('T')[0],
+        notes: ''
       });
-      setBookingSuccess(true);
-      setTimeout(() => {
-        setBookingSuccess(false);
-        setBookingModalOpen(false);
-        // Clear
-        setBookingForm({
-          name: '',
-          phone: '',
-          pickup: '',
-          destination: '',
-          serviceName: '',
-          date: new Date().toISOString().split('T')[0],
-          notes: ''
-        });
-      }, 3000);
-    } catch (e) {
-      console.error(e);
-      alert("Submission failed. Please call our hotline directly.");
-    }
+    }, 3000);
   };
 
   // Maps local images correctly
@@ -108,7 +73,7 @@ export const AmbulanceServices: React.FC = () => {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Services Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
           {services.map((s, idx) => (
             <motion.div
               key={s.id}

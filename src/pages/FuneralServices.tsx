@@ -1,12 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ShieldCheck, Heart, ArrowRight, X } from 'lucide-react';
-import { FuneralService } from '../types';
+import { funeralServices } from '../data/funeral-services';
 
 export const FuneralServices: React.FC = () => {
-  const [services, setServices] = useState<FuneralService[]>([]);
-  const [selectedService, setSelectedService] = useState<FuneralService | null>(null);
+  const [services] = useState(funeralServices);
+  const [selectedService, setSelectedService] = useState<typeof funeralServices[number] | null>(null);
 
   // Booking Modal State
   const [bookingModalOpen, setBookingModalOpen] = useState(false);
@@ -20,65 +19,32 @@ export const FuneralServices: React.FC = () => {
     notes: ''
   });
   const [bookingSuccess, setBookingSuccess] = useState(false);
-  const [pageContent, setPageContent] = useState<Record<string, string>>({
+  const [pageContent] = useState<Record<string, string>>({
     title: "Funeral & Homage Care",
     description: "We handle final farewells with the absolute respect, precision, and dignity. Serving the state with decorated hearse vans, freezer boxes, and VIP arrangements."
   });
-
-  useEffect(() => {
-    axios.get('http://localhost:8000/api/public/funeral-services/')
-      .then(response => {
-        setServices(response.data);
-      })
-      .catch(error => {
-        console.error("Failed to load funeral services", error);
-      });
-
-    axios.get('http://localhost:8000/api/public/seo-pages/funeral/')
-      .then(res => {
-        if (res.data && res.data.page_content) {
-          setPageContent(prev => ({ ...prev, ...res.data.page_content }));
-        }
-      })
-      .catch(err => console.error("Failed to load funeral page content", err));
-  }, []);
 
   const openBookingModal = (serviceTitle: string) => {
     setBookingForm(prev => ({ ...prev, serviceName: serviceTitle }));
     setBookingModalOpen(true);
   };
 
-  const handleBookingSubmit = async (e: React.FormEvent) => {
+  const handleBookingSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    try {
-      await axios.post('http://localhost:8000/api/public/bookings/create/', {
-        name: bookingForm.name,
-        phone: bookingForm.phone,
-        pickup_location: bookingForm.pickup,
-        destination: bookingForm.destination,
-        service_type: 'Funeral',
-        service_name: bookingForm.serviceName,
-        booking_date: bookingForm.date,
-        notes: bookingForm.notes
+    setBookingSuccess(true);
+    setTimeout(() => {
+      setBookingSuccess(false);
+      setBookingModalOpen(false);
+      setBookingForm({
+        name: '',
+        phone: '',
+        pickup: '',
+        destination: '',
+        serviceName: '',
+        date: new Date().toISOString().split('T')[0],
+        notes: ''
       });
-      setBookingSuccess(true);
-      setTimeout(() => {
-        setBookingSuccess(false);
-        setBookingModalOpen(false);
-        setBookingForm({
-          name: '',
-          phone: '',
-          pickup: '',
-          destination: '',
-          serviceName: '',
-          date: new Date().toISOString().split('T')[0],
-          notes: ''
-        });
-      }, 3000);
-    } catch (e) {
-      console.error(e);
-      alert("Inquiry submission failed. Please call our homage desk.");
-    }
+    }, 3000);
   };
 
   const getImage = (path: string) => {
@@ -105,7 +71,7 @@ export const FuneralServices: React.FC = () => {
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
           {services.map((s, idx) => (
             <motion.div
               key={s.id}

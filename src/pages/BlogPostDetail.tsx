@@ -1,34 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useMemo } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import axios from 'axios';
 import { Calendar, Tag, ArrowLeft, BookOpen, Clock } from 'lucide-react';
-import { BlogPost } from '../types';
+import { blogPosts } from '../data/blogs';
 
 export const BlogPostDetail: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
-  const [post, setPost] = useState<BlogPost | null>(null);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    setLoading(true);
-    axios.get(`http://localhost:8000/api/public/blogs/${slug}/`)
-      .then(response => {
-        setPost(response.data);
-        setLoading(false);
-      })
-      .catch(error => {
-        console.error("Failed to load blog details", error);
-        setLoading(false);
-      });
-  }, [slug]);
-
-  if (loading) {
-    return (
-      <div className="min-h-[60vh] flex items-center justify-center pt-24">
-        <div className="w-10 h-10 border-4 border-brandBlue border-t-transparent rounded-full animate-spin"></div>
-      </div>
-    );
-  }
+  const post = useMemo(() => blogPosts.find(b => b.slug === slug) ?? null, [slug]);
 
   if (!post) {
     return (

@@ -1,46 +1,22 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
 import { motion } from 'framer-motion';
 import { Search, Calendar, ChevronRight, BookOpen } from 'lucide-react';
-import { BlogPost } from '../types';
+import { blogPosts } from '../data/blogs';
 
 export const Blog: React.FC = () => {
-  const [blogs, setBlogs] = useState<BlogPost[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
-  const [categories, setCategories] = useState<string[]>(['All']);
-  const [pageContent, setPageContent] = useState<Record<string, string>>({
+  const [pageContent] = useState<Record<string, string>>({
     title: "Health & Homage Blog",
     description: "Educational guides, diagnostic tips, emergency standards, and compassionate homage advice."
   });
 
-  useEffect(() => {
-    // Fetch blogs from API
-    axios.get('http://localhost:8000/api/public/blogs/')
-      .then(response => {
-        const fetchedBlogs = response.data;
-        setBlogs(fetchedBlogs);
-        
-        // Extract distinct categories
-        const cats = ['All', ...new Set(fetchedBlogs.map((b: BlogPost) => b.category))] as string[];
-        setCategories(cats);
-      })
-      .catch(error => {
-        console.error("Failed to load blog posts", error);
-      });
-
-    axios.get('http://localhost:8000/api/public/seo-pages/blog/')
-      .then(res => {
-        if (res.data && res.data.page_content) {
-          setPageContent(prev => ({ ...prev, ...res.data.page_content }));
-        }
-      })
-      .catch(err => console.error("Failed to load blog page content", err));
+  const categories = useMemo(() => {
+    return ['All', ...new Set(blogPosts.map(b => b.category))];
   }, []);
 
-  // Filtered blogs
-  const filteredBlogs = blogs.filter(b => {
+  const filteredBlogs = blogPosts.filter(b => {
     const matchesSearch = b.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
                           b.content.toLowerCase().includes(searchQuery.toLowerCase());
     const matchesCategory = selectedCategory === 'All' || b.category === selectedCategory;
