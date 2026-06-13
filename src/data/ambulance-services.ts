@@ -1,4 +1,11 @@
 import { AmbulanceService } from '../types';
+import img1 from '../assets/1.jpg';
+import img2 from '../assets/2.jpeg';
+import img4 from '../assets/4.jpeg';
+import img5 from '../assets/5.jpg';
+import img6 from '../assets/6.jpg';
+import img7 from '../assets/7.jpg';
+import img8 from '../assets/8.jpg';
 
 export const ambulanceServices: AmbulanceService[] = [
   {
@@ -8,7 +15,7 @@ export const ambulanceServices: AmbulanceService[] = [
     short_description: 'Emergency transport with basic medical support',
     description: 'Our BLS ambulances are equipped with essential life-saving equipment including oxygen cylinders, stretchers, and first-aid kits. Ideal for non-critical patient transport with trained EMTs onboard ensuring patient stability during transit.',
     icon: 'ambulance',
-    image_path: 'AS 1.jpg',
+    image_path: img1,
     features: ['Oxygen Cylinder', 'Stretcher with Lock', 'First Aid Kit', 'Trained EMT', 'GPS Tracking', 'Mobile Ventilator Ready'],
     order: 1,
   },
@@ -19,7 +26,7 @@ export const ambulanceServices: AmbulanceService[] = [
     short_description: 'ICU-on-wheels with ventilator support',
     description: 'Our ALS ambulances function as a mobile ICU, equipped with advanced cardiac monitors, defibrillators, infusion pumps, and mechanical ventilators. Staffed by critical care paramedics for high-acuity patients requiring intensive monitoring during inter-facility transfers.',
     icon: 'ambulance',
-    image_path: 'AS 2.jpg',
+    image_path: img2,
     features: ['Cardiac Monitor', 'Defibrillator', 'Infusion Pump', 'Mechanical Ventilator', 'Multi-parameter Monitor', 'Suction Machine'],
     order: 2,
   },
@@ -30,7 +37,7 @@ export const ambulanceServices: AmbulanceService[] = [
     short_description: 'Specialized transport for newborns and children',
     description: 'Specially designed ambulances with portable incubators, pediatric ventilators, and temperature-controlled environments. Our NICU-trained staff ensure safe transport of premature babies and children requiring specialized medical attention during transit.',
     icon: 'ambulance',
-    image_path: 'AS 3.jpg',
+    image_path: img4,
     features: ['Portable Incubator', 'Pediatric Ventilator', 'Temperature Control', 'Neonatal Monitor', 'Pediatric Drug Kit', 'Trained Neonatal Nurse'],
     order: 3,
   },
@@ -41,7 +48,7 @@ export const ambulanceServices: AmbulanceService[] = [
     short_description: 'Full ICU setup for critical patient transfer',
     description: 'State-of-the-art ICU ambulances featuring advanced life support systems including multi-parameter monitors, ventilators, and critical care medications. Perfect for inter-city or interstate transfers of critically ill patients requiring continuous intensive care.',
     icon: 'ambulance',
-    image_path: 'AS 4.jpg',
+    image_path: img5,
     features: ['ICU Ventilator', 'Multi-parameter Monitor', 'Defibrillator', 'Infusion Pumps', 'Central Oxygen Supply', 'Critical Care Paramedic'],
     order: 4,
   },
@@ -52,7 +59,7 @@ export const ambulanceServices: AmbulanceService[] = [
     short_description: 'Comfortable non-emergency patient transport',
     description: 'Comfortable and accessible transport vehicles for non-emergency medical appointments, discharge transfers, and routine checkups. Our PTVs are equipped with wheelchair ramps, comfortable seating, and basic amenities for patient convenience.',
     icon: 'ambulance',
-    image_path: 'AS 5.jpg',
+    image_path: img6,
     features: ['Wheelchair Ramp', 'Comfort Seating', 'AC Comfort', 'Trained Attendant', 'Stretcher', 'GPS Tracking'],
     order: 5,
   },
@@ -63,7 +70,7 @@ export const ambulanceServices: AmbulanceService[] = [
     short_description: 'Cross-border patient transfer with full medical support',
     description: 'Purpose-built ambulances for long-distance interstate transfers featuring extended fuel range, backup oxygen systems, dual-crew rotation, and rest facilities. Fully equipped to handle medical emergencies during multi-state journeys with satellite tracking.',
     icon: 'ambulance',
-    image_path: 'AS 6.jpg',
+    image_path: img7,
     features: ['Extended Fuel Range', 'Backup Oxygen', 'Dual Crew Rotation', 'Satellite Tracking', 'Long-range Comms', 'Emergency Medicines Kit'],
     order: 6,
   },
@@ -74,7 +81,7 @@ export const ambulanceServices: AmbulanceService[] = [
     short_description: 'Heart attack and cardiac emergency response',
     description: 'Rapid response cardiac ambulances equipped with 12-lead ECG machines, cardiac monitors, defibrillators, and thrombolytic medications. Our cardiac-trained paramedics work closely with hospital cath labs to provide seamless STEMI care during transport.',
     icon: 'ambulance',
-    image_path: 'AS 7.jpg',
+    image_path: img8,
     features: ['12-lead ECG', 'Cardiac Monitor', 'Defibrillator', 'Thrombolytic Drugs', 'Cardiac-trained Paramedic', 'Cath Lab Integration'],
     order: 7,
   },

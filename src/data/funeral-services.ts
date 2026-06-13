@@ -1,4 +1,7 @@
 import { FuneralService } from '../types';
+import img8a from '../assets/8a.jpg';
+import img8b from '../assets/8b.jpg';
+import img8c from '../assets/8c.jpg';
 
 export const funeralServices: FuneralService[] = [
   {
@@ -8,7 +11,7 @@ export const funeralServices: FuneralService[] = [
     short_description: 'AC hearse van for dignified last journey',
     description: 'Our air-conditioned funeral vans provide a dignified and comfortable final journey for the departed. Featuring temperature-controlled interiors, elegant décor, and professional attendants who ensure the highest standards of respect and care throughout the procession.',
     icon: 'heart',
-    image_path: 'FC 1.jpg',
+    image_path: img8a,
     features: ['AC Temperature Control', 'Elegant Interior Décor', 'Professional Attendants', 'GPS Tracked Procession', 'Spacious Compartment', 'Respectful Handling'],
     order: 1,
   },
@@ -19,7 +22,7 @@ export const funeralServices: FuneralService[] = [
     short_description: 'Cold storage preservation for extended periods',
     description: 'Industrial-grade deceased freezer boxes designed for temporary preservation and transportation of mortal remains. Ideal for long-distance transfers, legal formalities, or delays in funeral arrangements. Maintains optimal temperature with backup power support.',
     icon: 'heart',
-    image_path: 'FC 2.jpg',
+    image_path: img8b,
     features: ['Temperature Controlled', 'Backup Power Support', 'Portable Design', 'Long Duration Storage', 'Hygienic Interior', 'Easy Loading System'],
     order: 2,
   },
@@ -30,7 +33,7 @@ export const funeralServices: FuneralService[] = [
     short_description: 'Mechanized lowering system for graveside services',
     description: 'Motorized coffin lowering equipment ensuring smooth and dignified lowering during burial ceremonies. Our battery-operated systems provide controlled descent with remote operation, eliminating manual handling and ensuring complete respect during the final rites.',
     icon: 'heart',
-    image_path: 'FC 3.jpg',
+    image_path: img8c,
     features: ['Battery Operated', 'Remote Control', 'Smooth Descent', 'Load Capacity 300kg', 'Portable Setup', 'Silent Operation'],
     order: 3,
   },
@@ -41,7 +44,7 @@ export const funeralServices: FuneralService[] = [
     short_description: 'Premium homage services with full ceremonial support',
     description: 'Comprehensive VIP funeral packages designed for dignitaries, public figures, and families seeking the highest level of ceremonial respect. Includes luxury hearse, floral arrangements, motorcade coordination, and dedicated funeral directors managing every aspect.',
     icon: 'heart',
-    image_path: 'FC 4.jpg',
+    image_path: 'https://images.unsplash.com/photo-1507608869274-d3177c8bb4c7?w=600&q=80',
     features: ['Luxury Hearse', 'Floral Arrangements', 'Motorcade Coordination', 'Dedicated Funeral Director', 'Ceremonial Support', 'Media Management'],
     order: 4,
   },
@@ -52,7 +55,7 @@ export const funeralServices: FuneralService[] = [
     short_description: 'Wide range of coffins, caskets, and urns',
     description: 'Browse our carefully curated selection of coffins, caskets, and memorial urns. From traditional wooden coffins to eco-friendly options and premium metal caskets with custom engravings. Our counselors help families choose the appropriate memorial for their loved ones.',
     icon: 'heart',
-    image_path: 'FC 5.jpg',
+    image_path: 'https://images.unsplash.com/photo-1516627145497-ae6968895b74?w=600&q=80',
     features: ['Wooden Coffins', 'Metal Caskets', 'Eco-friendly Options', 'Custom Engraving', 'Memorial Urns', 'Expert Counseling'],
     order: 5,
   },
@@ -63,7 +66,7 @@ export const funeralServices: FuneralService[] = [
     short_description: 'Help with documentation and legal formalities',
     description: 'Compassionate guidance through the complex legal processes following a demise. Our team assists with death certificate registration, police intimation, insurance claim documentation, and other statutory requirements, allowing families to focus on mourning and remembrance.',
     icon: 'heart',
-    image_path: 'FC 6.jpg',
+    image_path: 'https://images.unsplash.com/photo-1450133064473-71024230f91b?w=600&q=80',
     features: ['Death Certificate Support', 'Police Intimation', 'Insurance Documentation', 'Legal Guidance', 'Document Collection', 'Family Liaison'],
     order: 6,
   },
@@ -74,7 +77,7 @@ export const funeralServices: FuneralService[] = [
     short_description: 'Respecting diverse traditions and customs',
     description: 'Our team is experienced in conducting funerals according to various religious and cultural traditions including Hindu, Christian, Muslim, Sikh, and Jain customs. We coordinate with priests, church authorities, and community leaders to ensure all rituals are properly observed.',
     icon: 'heart',
-    image_path: 'FC 7.jpg',
+    image_path: 'https://images.unsplash.com/photo-1509021436665-8f07dbf5bf1d?w=600&q=80',
     features: ['Multi-faith Support', 'Priest Coordination', 'Ritual Arrangements', 'Community Liaison', 'Tradition Guidance', 'Pandit/Pastor Booking'],
     order: 7,
   },
@@ -85,7 +88,7 @@ export const funeralServices: FuneralService[] = [
     short_description: 'Inter-city and interstate mortal remains transport',
     description: 'Specialized dead body transportation services for moving mortal remains between cities, states, or countries. Our fleet of freezer-equipped vehicles and professional handling staff ensure dignified transport with all necessary documentation and embalming support.',
     icon: 'heart',
-    image_path: 'FC 8.jpg',
+    image_path: 'https://images.unsplash.com/photo-1447752875215-b2761acb3c5d?w=600&q=80',
     features: ['Freezer Transport', 'Embalming Support', 'Documentation Help', 'Inter-state Service', 'Airport Transfer', '24/7 Coordination'],
     order: 8,
   },

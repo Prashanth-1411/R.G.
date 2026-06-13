@@ -38,7 +38,7 @@ export const KeyboardShortcutsHelp: React.FC<Props> = ({ open, onClose, shortcut
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
-            className="absolute inset-0 bg-brandNavy/70 backdrop-blur-sm"
+            className="absolute inset-0 bg-[#0F172A]/70 backdrop-blur-sm"
           ></motion.div>
           <motion.div
             initial={{ opacity: 0, scale: 0.95, y: 30 }}
@@ -48,7 +48,7 @@ export const KeyboardShortcutsHelp: React.FC<Props> = ({ open, onClose, shortcut
           >
             <div className="sticky top-0 bg-white z-10 flex items-center justify-between p-5 sm:p-6 border-b border-slate-100 rounded-t-3xl">
               <div>
-                <h2 className="text-xl sm:text-2xl font-black text-brandNavy font-raleway">Keyboard Shortcuts</h2>
+                <h2 className="text-xl sm:text-2xl font-black text-[#0F172A] font-raleway">Keyboard Shortcuts</h2>
                 <p className="text-xs text-slate-400 font-poppins mt-0.5">Press <kbd className="px-1.5 py-0.5 bg-slate-100 rounded text-[10px] font-bold">?</kbd> to toggle this panel</p>
               </div>
               <button
@@ -62,7 +62,7 @@ export const KeyboardShortcutsHelp: React.FC<Props> = ({ open, onClose, shortcut
             <div className="p-5 sm:p-6 space-y-6">
               {grouped.map(group => (
                 <div key={group.category}>
-                  <h3 className="text-xs font-extrabold uppercase tracking-widest text-brandBlue mb-3 font-poppins">
+                  <h3 className="text-xs font-extrabold uppercase tracking-widest text-[#0F4CFF] mb-3 font-poppins">
                     {group.category}
                   </h3>
                   <div className="space-y-1.5">

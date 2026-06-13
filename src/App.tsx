@@ -5,6 +5,8 @@ import { Footer } from './components/Footer';
 import { FloatingCTA } from './components/FloatingCTA';
 import { KeyboardShortcutsHelp } from './components/KeyboardShortcutsHelp';
 import { useKeyboardShortcuts } from './hooks/useKeyboardShortcuts';
+import { NavigationProvider, useAnimatedNavigation } from './components/NavigationContext';
+import { PageTransitionLoader } from './components/PageTransitionLoader';
 import { Home } from './pages/Home';
 import { AmbulanceServices } from './pages/AmbulanceServices';
 import { FuneralServices } from './pages/FuneralServices';
@@ -18,13 +20,17 @@ import { LocationPage } from './pages/LocationPage';
 const MainLayout: React.FC = () => {
   const location = useLocation();
   const { showHelp, setShowHelp, shortcuts } = useKeyboardShortcuts();
+  const { isNavigating } = useAnimatedNavigation();
 
   useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [location.pathname]);
+    if (!isNavigating) {
+      window.scrollTo(0, 0);
+    }
+  }, [location.pathname, isNavigating]);
 
   return (
     <div className="flex flex-col min-h-screen">
+      <PageTransitionLoader isVisible={isNavigating} />
       <Header />
       <main className="flex-grow">
         <Routes>
@@ -45,10 +51,18 @@ const MainLayout: React.FC = () => {
   );
 };
 
+const AppWithNavigation: React.FC = () => {
+  return (
+    <NavigationProvider>
+      <MainLayout />
+    </NavigationProvider>
+  );
+};
+
 export const App: React.FC = () => {
   return (
     <Router>
-      <MainLayout />
+      <AppWithNavigation />
     </Router>
   );
 };
