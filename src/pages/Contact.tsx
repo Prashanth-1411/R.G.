@@ -93,7 +93,7 @@ export const Contact: React.FC = () => {
     {
       icon: <MapPin className="w-5 h-5" />,
       label: 'Headquarters',
-      value: 'Surapet, Chennai, Tamil Nadu 600066',
+      value: '115/2a, Ambattur Road, Surapet, Soorapattu, Ambattur Taluka, Chennai - 600066',
     },
     {
       icon: <Mail className="w-5 h-5" />,
@@ -448,7 +448,7 @@ export const Contact: React.FC = () => {
           <AnimatedSection className="mt-12" direction="up">
             <div className="relative rounded-3xl overflow-hidden shadow-premium-xl border border-navy-100/60 h-[400px]">
               <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3886.123456789!2d80.1607!3d13.0812!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a526f5b4b4b4b4b%3A0x123456789!2sSurapet%2C%20Chennai%2C%20Tamil%20Nadu%20600066!5e1!3m2!1sen!2sin!4v1"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3886.123456789!2d80.1607!3d13.0812!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a526f5b4b4b4b4b%3A0x123456789!2s115%2F2a%2C%20Ambattur%20Road%2C%20Surapet%2C%20Soorapattu%2C%20Ambattur%20Taluka%2C%20Chennai%20-%20600066!5e1!3m2!1sen!2sin!4v1"
                 width="100%" height="100%" style={{ border: 0 }} allowFullScreen={true} loading="lazy"
                 title="R.G. Ambulance Service - Chennai Headquarters"
                 className="grayscale-[0.3]"
@@ -461,7 +461,7 @@ export const Contact: React.FC = () => {
                   </div>
                   <div>
                     <p className="text-white font-bold text-sm font-display">R.G. Ambulance Service</p>
-                    <p className="text-navy-400 text-xs">Surapet, Chennai · Tamil Nadu 600066</p>
+                    <p className="text-navy-400 text-xs">115/2a, Ambattur Road, Surapet · Chennai - 600066</p>
                   </div>
                 </div>
               </div>

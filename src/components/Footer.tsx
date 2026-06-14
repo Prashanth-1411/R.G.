@@ -113,7 +113,7 @@ export const Footer: React.FC = () => {
                 <div>
                   <p className="text-xs text-navy-500 font-medium uppercase tracking-wider">Address</p>
                   <p className="text-sm text-navy-300 group-hover:text-white transition-colors">
-                    Surapet, Chennai, Tamil Nadu 600066
+                    115/2a, Ambattur Road, Surapet, Soorapattu, Ambattur Taluka, Chennai - 600066
                   </p>
                 </div>
               </div>
