@@ -1,88 +1,106 @@
-import React, { useMemo } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import { Calendar, Tag, ArrowLeft, BookOpen, Clock } from 'lucide-react';
-import { blogPosts } from '../data/blogs';
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import { BookOpen, ArrowLeft, Clock } from 'lucide-react';
+
+const FloatingShape: React.FC<{ className?: string; delay?: number }> = ({ className = '', delay = 0 }) => (
+  <motion.div
+    className={`absolute rounded-full mix-blend-multiply filter blur-xl opacity-20 ${className}`}
+    animate={{
+      y: [0, -30, 0],
+      x: [0, 15, 0],
+      scale: [1, 1.05, 1],
+    }}
+    transition={{
+      duration: 8,
+      delay,
+      repeat: Infinity,
+      ease: 'easeInOut',
+    }}
+  />
+);
 
 export const BlogPostDetail: React.FC = () => {
-  const { slug } = useParams<{ slug: string }>();
   const navigate = useNavigate();
-  const post = useMemo(() => blogPosts.find(b => b.slug === slug) ?? null, [slug]);
-
-  if (!post) {
-    return (
-      <div className="max-w-xl mx-auto px-4 py-32 text-center space-y-4 font-poppins">
-        <BookOpen className="w-16 h-16 text-slate-300 mx-auto" />
-        <h2 className="text-2xl font-bold text-slate-700 font-inter">Article Not Found</h2>
-        <p className="text-slate-400">The post you are searching for might have been archived or removed by the administrator.</p>
-        <button onClick={() => navigate('/blog')} className="inline-flex items-center gap-1 text-[#0F4CFF] font-bold hover:underline">
-          <ArrowLeft className="w-4 h-4" />
-          <span>Back to Articles</span>
-        </button>
-      </div>
-    );
-  }
-
-  const getBlogImage = (path: string) => {
-    if (path.startsWith('B ')) {
-      return `/images/Blog/${path}`;
-    }
-    return path || 'https://images.unsplash.com/photo-1587745416684-47953f16fdd1?w=800';
-  };
-
-  const formatDate = (dateStr: string) => {
-    const d = new Date(dateStr);
-    return d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
-  };
 
   return (
-    <article className="pt-20 pb-16 bg-slate-50">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Back Link */}
-        <button onClick={() => navigate('/blog')} className="inline-flex items-center gap-2 mb-6 text-slate-500 hover:text-[#0F4CFF] font-bold text-sm tracking-wide transition-colors font-poppins">
-          <ArrowLeft className="w-4 h-4" />
-          <span>Back to Blog List</span>
-        </button>
+    <div className="pt-20">
+      <section className="relative min-h-[50vh] flex items-center overflow-hidden bg-navy-900">
+        <FloatingShape className="w-72 h-72 bg-brand-500 top-10 -left-20" delay={0} />
+        <FloatingShape className="w-96 h-96 bg-gold-500 bottom-20 -right-20" delay={2} />
 
-        {/* Blog Container */}
-        <div className="bg-white rounded-3xl overflow-hidden border border-slate-200/60 shadow-sm">
-          {/* Header Image */}
-          <div className="relative h-64 sm:h-[450px]">
-            <img src={getBlogImage(post.featured_image)} alt={post.title} className="w-full h-full object-cover" />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
-            <div className="absolute bottom-6 left-6 right-6 text-white space-y-3">
-              <span className="bg-[#0F4CFF] text-white text-[10px] uppercase font-bold tracking-widest px-3 py-1 rounded-full shadow-sm font-poppins inline-block">{post.category}</span>
-              <h1 className="text-2xl sm:text-4xl font-black font-inter leading-snug">{post.title}</h1>
-            </div>
+        <div className="absolute inset-0 bg-gradient-to-br from-navy-900 via-navy-800 to-navy-900" />
+        <div className="absolute inset-0 bg-hero-glow" />
+        <div className="absolute inset-0 split-pattern opacity-20" />
+
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 w-full relative z-10">
+          <div className="py-16">
+            <motion.div
+              initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+            >
+              <motion.button
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.97 }}
+                onClick={() => navigate('/blog')}
+                className="inline-flex items-center gap-2 mb-8 text-navy-400 hover:text-white font-bold text-sm tracking-wide transition-colors font-body"
+              >
+                <ArrowLeft className="w-4 h-4" />
+                <span>Back to Blog</span>
+              </motion.button>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2, duration: 0.6 }}
+            >
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-brand-500/10 border border-brand-500/20 text-brand-400 text-xs font-bold uppercase tracking-wider mb-6">
+                Coming Soon
+              </div>
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-white font-display leading-[1.05] tracking-tight">
+                Article Not Available Yet
+              </h1>
+              <p className="mt-4 text-lg text-navy-300 leading-relaxed max-w-xl font-body">
+                This article is being prepared. Check back soon for valuable content on emergency preparedness, health tips, and funeral care guidance.
+              </p>
+            </motion.div>
           </div>
-
-          {/* Metadata Bar */}
-          <div className="px-6 py-4 border-b border-slate-100 flex flex-wrap gap-4 text-xs font-semibold text-slate-400 font-poppins bg-slate-50">
-            <div className="flex items-center gap-1.5">
-              <Calendar className="w-4 h-4 text-slate-400" />
-              <span>Published: {formatDate(post.created_at)}</span>
-            </div>
-            <div className="flex items-center gap-1.5">
-              <Clock className="w-4 h-4 text-slate-400" />
-              <span>Read Time: 3 mins</span>
-            </div>
-          </div>
-
-          {/* Main Body HTML / Content */}
-          <div className="p-6 sm:p-10 font-poppins text-slate-700 leading-relaxed text-sm sm:text-base space-y-6 text-justify whitespace-pre-line">
-            {post.content}
-          </div>
-
-          {/* Tags Footer */}
-          {post.tags && (
-            <div className="px-6 sm:px-10 pb-8 flex flex-wrap gap-2 items-center">
-              <Tag className="w-4 h-4 text-slate-400 shrink-0" />
-              {post.tags.split(',').map((tag, i) => (
-                <span key={i} className="px-3 py-1 bg-slate-100 text-slate-500 rounded-lg text-xs font-semibold">#{tag.trim()}</span>
-              ))}
-            </div>
-          )}
         </div>
-      </div>
-    </article>
+      </section>
+
+      <section className="py-24 bg-white relative overflow-hidden">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-lg mx-auto text-center">
+            <div className="premium-card p-12 sm:p-16">
+              <motion.div
+                initial={{ scale: 0 }}
+                whileInView={{ scale: 1 }}
+                transition={{ type: 'spring', stiffness: 200 }}
+                className="w-20 h-20 rounded-full premium-gradient flex items-center justify-center mx-auto mb-6 shadow-glow"
+              >
+                <BookOpen className="w-10 h-10 text-white" />
+              </motion.div>
+
+              <h2 className="text-2xl sm:text-3xl font-black text-navy-800 font-display mb-3">
+                Blog Will Update Soon
+              </h2>
+
+              <div className="w-16 h-1 premium-gradient mx-auto mb-6 rounded-full" />
+
+              <p className="text-navy-500 text-sm sm:text-base font-body leading-relaxed">
+                This article is not available yet. We are working on new content and it will be published soon. Please check back later.
+              </p>
+
+              <div className="mt-8 flex items-center justify-center gap-2 text-xs text-navy-400 font-body">
+                <Clock className="w-4 h-4" />
+                <span>Estimated launch: Coming weeks</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
   );
 };

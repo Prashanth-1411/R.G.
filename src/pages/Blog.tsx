@@ -1,128 +1,134 @@
-import React, { useState, useMemo } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Search, Calendar, ChevronRight, BookOpen } from 'lucide-react';
-import { blogPosts } from '../data/blogs';
+import React from 'react';
+import { motion } from 'framer-motion';
+import { BookOpen, Sparkles, Clock } from 'lucide-react';
+import { AnimatedSection } from '../components/AnimatedSection';
+
+const FloatingShape: React.FC<{ className?: string; delay?: number }> = ({ className = '', delay = 0 }) => (
+  <motion.div
+    className={`absolute rounded-full mix-blend-multiply filter blur-xl opacity-20 ${className}`}
+    animate={{
+      y: [0, -30, 0],
+      x: [0, 15, 0],
+      scale: [1, 1.05, 1],
+    }}
+    transition={{
+      duration: 8,
+      delay,
+      repeat: Infinity,
+      ease: 'easeInOut',
+    }}
+  />
+);
 
 export const Blog: React.FC = () => {
-  const navigate = useNavigate();
-  const [searchQuery, setSearchQuery] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState('All');
-  const [pageContent] = useState<Record<string, string>>({
-    title: "Health & Homage Blog",
-    description: "Educational guides, diagnostic tips, emergency standards, and compassionate homage advice."
-  });
-
-  const categories = useMemo(() => {
-    return ['All', ...new Set(blogPosts.map(b => b.category))];
-  }, []);
-
-  const filteredBlogs = blogPosts.filter(b => {
-    const matchesSearch = b.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                          b.content.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesCategory = selectedCategory === 'All' || b.category === selectedCategory;
-    return matchesSearch && matchesCategory;
-  });
-
-  const getBlogImage = (path: string) => {
-    if (path.startsWith('B ')) {
-      return `/images/Blog/${path}`;
-    }
-    return path || 'https://images.unsplash.com/photo-1587745416684-47953f16fdd1?w=500';
-  };
-
-  const formatDate = (dateStr: string) => {
-    const d = new Date(dateStr);
-    return d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
-  };
-
   return (
-    <div className="pt-20 pb-16 bg-slate-50">
-      {/* Banner */}
-      <div className="bg-[#0F172A] text-white py-12 sm:py-16 mb-10 sm:mb-16">
+    <div className="pt-20">
+      <section className="relative min-h-[60vh] flex items-center overflow-hidden bg-navy-900">
+        <FloatingShape className="w-72 h-72 bg-brand-500 top-10 -left-20" delay={0} />
+        <FloatingShape className="w-96 h-96 bg-gold-500 bottom-20 -right-20" delay={2} />
+        <FloatingShape className="w-64 h-64 bg-purple-400 top-1/3 right-1/4" delay={4} />
+
+        <div className="absolute inset-0 bg-gradient-to-br from-navy-900 via-navy-800 to-navy-900" />
+        <div className="absolute inset-0 bg-hero-glow" />
+        <div className="absolute inset-0 split-pattern opacity-20" />
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full relative z-10">
+          <div className="max-w-3xl py-20">
+            <motion.div
+              initial={{ opacity: 0, y: 60 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
+              className="space-y-8"
+            >
+              <div className="flex flex-wrap items-center gap-3">
+                <motion.span
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: 0.2, duration: 0.5 }}
+                  className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-brand-500/10 border border-brand-500/20 text-brand-400 text-xs font-bold uppercase tracking-wider"
+                >
+                  <Sparkles className="w-3 h-3" />
+                  Coming Soon
+                </motion.span>
+              </div>
+
+              <h1 className="text-5xl sm:text-6xl lg:text-7xl font-black text-white font-display leading-[1.05] tracking-tight">
+                Health & Homage
+                <span className="block text-gradient"> Blog</span>
+              </h1>
+
+              <p className="text-lg text-navy-300 leading-relaxed max-w-xl font-body">
+                Educational guides, diagnostic tips, emergency standards, and compassionate homage advice — coming soon.
+              </p>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      <section className="py-24 bg-white relative overflow-hidden">
+        <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-brand-500/20 to-transparent" />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h1 className="text-3xl sm:text-5xl font-black font-inter tracking-tight">{pageContent.title || "Health & Homage Blog"}</h1>
-          <p className="mt-3 sm:mt-4 text-slate-400 text-sm max-w-xl font-poppins">{pageContent.description}</p>
-        </div>
-      </div>
+          <AnimatedSection>
+            <div className="max-w-lg mx-auto text-center">
+              <div className="premium-card p-12 sm:p-16">
+                <motion.div
+                  initial={{ scale: 0 }}
+                  whileInView={{ scale: 1 }}
+                  transition={{ type: 'spring', stiffness: 200 }}
+                  className="w-20 h-20 rounded-full premium-gradient flex items-center justify-center mx-auto mb-6 shadow-glow"
+                >
+                  <BookOpen className="w-10 h-10 text-white" />
+                </motion.div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
-          {/* Main List */}
-          <div className="lg:col-span-8 space-y-8">
-            {/* Search Box */}
-            <div className="relative">
-              <input
-                type="text"
-                placeholder="Search articles..."
-                value={searchQuery}
-                onChange={e => setSearchQuery(e.target.value)}
-                className="w-full pl-12 pr-4 py-3.5 border border-slate-200 rounded-xl focus:border-[#0F4CFF] focus:outline-none bg-white text-sm text-slate-800"
-              />
-              <Search className="w-5 h-5 text-slate-400 absolute left-4 top-1/2 -translate-y-1/2" />
-            </div>
+                <h2 className="text-2xl sm:text-3xl font-black text-navy-800 font-display mb-3">
+                  Blog Will Update Soon
+                </h2>
 
-            {filteredBlogs.length === 0 ? (
-              <div className="text-center py-16 bg-white rounded-3xl border border-slate-200/60 p-8">
-                <BookOpen className="w-12 h-12 text-slate-300 mx-auto mb-4" />
-                <h3 className="text-xl font-bold text-slate-700 font-inter">No Articles Found</h3>
-                <p className="text-slate-400 text-sm font-poppins mt-2">Try refining your search terms or selecting a different category.</p>
-              </div>
-            ) : (
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
-                {filteredBlogs.map((b) => (
-                  <div key={b.id} className="bg-white rounded-3xl overflow-hidden border border-slate-200/60 shadow-sm flex flex-col justify-between group">
-                    <div>
-                      <div className="relative h-48 overflow-hidden">
-                        <img src={getBlogImage(b.featured_image)} alt={b.title} className="w-full h-full object-cover group-hover:scale-105 transition-all duration-500" />
-                        <span className="absolute top-4 left-4 bg-[#0F4CFF] text-white text-[10px] uppercase font-bold tracking-widest px-3 py-1 rounded-full shadow-sm font-poppins">{b.category}</span>
-                      </div>
+                <div className="w-16 h-1 premium-gradient mx-auto mb-6 rounded-full" />
 
-                      <div className="p-6 space-y-3">
-                        <div className="flex items-center gap-1 text-slate-400 text-xs font-semibold font-poppins">
-                          <Calendar className="w-3.5 h-3.5" />
-                          <span>{formatDate(b.created_at)}</span>
-                        </div>
-                        <h3 className="text-lg font-bold text-[#0F172A] font-inter group-hover:text-[#0F4CFF] transition-colors line-clamp-2">{b.title}</h3>
-                        <p className="text-slate-500 text-sm font-poppins leading-relaxed line-clamp-3 text-justify">{b.content.replace(/<[^>]*>/g, '')}</p>
-                      </div>
-                    </div>
+                <p className="text-navy-500 text-sm sm:text-base font-body leading-relaxed">
+                  We are working on new articles and guides for you. Check back later for updates on health tips, emergency preparedness, and funeral care guidance.
+                </p>
 
-                    <div className="p-6 pt-0">
-                      <button onClick={() => navigate(`/blog/${b.slug}`)} className="inline-flex items-center gap-1 text-[#0F4CFF] font-bold text-xs tracking-wider uppercase group-hover:text-blue-700 transition-colors font-poppins">
-                        <span>Read Article</span>
-                        <ChevronRight className="w-3.5 h-3.5" />
-                      </button>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
-
-          {/* Sidebar Filters */}
-          <div className="lg:col-span-4 space-y-8">
-            <div className="bg-white p-6 sm:p-8 rounded-2xl border border-slate-200/60 shadow-sm">
-              <h4 className="font-extrabold text-[#0F172A] text-base uppercase tracking-wider mb-6 font-inter border-b border-slate-50 pb-2">Categories</h4>
-              <div className="flex flex-wrap lg:flex-col gap-2">
-                {categories.map((cat) => (
-                  <button
-                    key={cat}
-                    onClick={() => setSelectedCategory(cat)}
-                    className={`px-4 py-2.5 rounded-xl text-left font-bold text-sm tracking-wide transition-all duration-200 w-full flex items-center justify-between font-poppins ${
-                      selectedCategory === cat
-                        ? 'bg-[#0F4CFF] text-white shadow-sm'
-                        : 'bg-slate-50 text-slate-600 hover:bg-slate-100 hover:text-slate-800'
-                    }`}
-                  >
-                    <span>{cat}</span>
-                    <ChevronRight className={`w-4 h-4 opacity-50 ${selectedCategory === cat ? 'text-white' : 'text-slate-400'}`} />
-                  </button>
-                ))}
+                <div className="mt-8 flex items-center justify-center gap-2 text-xs text-navy-400 font-body">
+                  <Clock className="w-4 h-4" />
+                  <span>Estimated launch: Coming weeks</span>
+                </div>
               </div>
             </div>
+          </AnimatedSection>
+        </div>
+      </section>
+
+      <section className="relative py-20 overflow-hidden">
+        <div className="absolute inset-0 premium-gradient" />
+        <div className="absolute inset-0 split-pattern opacity-10" />
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="flex flex-col lg:flex-row items-center justify-between gap-8">
+            <AnimatedSection direction="left">
+              <div className="space-y-4 text-center lg:text-left">
+                <h3 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white font-display tracking-tight leading-tight">
+                  Need Emergency Help Now?
+                </h3>
+                <p className="text-base text-navy-300 max-w-xl font-body">
+                  Our medical coordinators are available 24/7 — no waiting, no forms, just immediate assistance.
+                </p>
+              </div>
+            </AnimatedSection>
+
+            <AnimatedSection direction="right" className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
+              <motion.a
+                href="tel:+919551663530"
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.97 }}
+                className="flex items-center justify-center gap-2.5 px-8 py-4 bg-white text-brand-600 font-black rounded-xl shadow-xl text-sm hover:bg-navy-50 transition-all"
+              >
+                <span>Call 24/7: +91 95516 63530</span>
+              </motion.a>
+            </AnimatedSection>
           </div>
         </div>
-      </div>
+      </section>
     </div>
   );
 };

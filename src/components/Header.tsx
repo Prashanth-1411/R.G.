@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, Phone, Ambulance } from 'lucide-react';
+import { Menu, X, Phone, ChevronDown } from 'lucide-react';
 import { AnimatedLink } from './AnimatedLink';
+import logoImg from '../assets/Logo.png';
 
 export const Header: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -33,28 +34,25 @@ export const Header: React.FC = () => {
   const isActive = (path: string) => location.pathname === path;
 
   return (
-    <header
-      className={`fixed top-0 left-0 w-full z-50 transition-all duration-200 ${
+    <motion.header
+      initial={{ y: -100 }}
+      animate={{ y: 0 }}
+      transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
+      className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ${
         isScrolled
-          ? 'glass-nav shadow-sm'
+          ? 'glass shadow-lg shadow-black/5'
           : 'bg-transparent'
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16 lg:h-20">
+        <div className="flex items-center justify-between h-20">
           {/* Logo */}
-          <AnimatedLink to="/" className="flex items-center gap-2.5 group">
-            <div className="w-9 h-9 bg-[#0F4CFF] rounded-lg flex items-center justify-center transition-transform duration-200 group-hover:scale-105">
-              <Ambulance className="w-5 h-5 text-white" />
-            </div>
-            <div>
-              <span className="font-extrabold text-lg tracking-tight text-[#0F172A]">
-                R.G. <span className="text-[#0F4CFF]">AMBULANCE</span>
-              </span>
-              <span className="hidden sm:block text-[9px] uppercase font-bold tracking-[0.15em] text-slate-400 -mt-0.5">
-                ICU on Wheels
-              </span>
-            </div>
+          <AnimatedLink to="/" className="flex items-center gap-3 group">
+            <img
+              src={logoImg}
+              alt="R.G. Ambulance Service"
+              className="h-16 w-auto object-contain transition-all duration-300 group-hover:scale-105"
+            />
           </AnimatedLink>
 
           {/* Desktop Nav */}
@@ -63,33 +61,47 @@ export const Header: React.FC = () => {
               <AnimatedLink
                 key={item.name}
                 to={item.path}
-                className={`px-3.5 py-2 text-sm font-semibold rounded-lg transition-all duration-200 ${
+                className={`px-4 py-2 text-sm font-semibold rounded-xl transition-all duration-300 relative ${
                   isActive(item.path)
-                    ? 'text-[#0F4CFF] bg-[#0F4CFF]/5'
-                    : 'text-slate-600 hover:text-[#0F4CFF] hover:bg-slate-50'
+                    ? 'text-brand-600'
+                    : 'text-navy-600 hover:text-brand-600 hover:bg-brand-50'
                 }`}
               >
-                {item.name}
+                {isActive(item.path) && (
+                  <motion.div
+                    layoutId="activeNav"
+                    className="absolute inset-0 bg-brand-50 rounded-xl"
+                    transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+                  />
+                )}
+                <span className="relative z-10">{item.name}</span>
               </AnimatedLink>
             ))}
           </nav>
 
           {/* Emergency CTA */}
-          <div className="hidden lg:flex items-center">
+          <div className="hidden lg:flex items-center gap-3">
             <a
               href="tel:+919551663530"
-              className="flex items-center gap-2 px-4 py-2.5 bg-[#DC2626] hover:bg-[#B91C1C] text-white rounded-lg font-bold text-sm transition-all duration-200 shadow-sm"
+              className="btn-emergency !py-2.5 !px-5 text-xs"
             >
               <Phone className="w-4 h-4" />
-              <span>24/7: 95516 63530</span>
+              <span>24/7 Emergency: 95516 63530</span>
             </a>
           </div>
 
           {/* Mobile Menu Button */}
-          <div className="md:hidden flex items-center">
+          <div className="md:hidden flex items-center gap-2">
+            <a
+              href="tel:+919551663530"
+              className="p-2.5 bg-red-50 text-red-600 rounded-xl hover:bg-red-100 transition-colors"
+              aria-label="Call 24/7"
+            >
+              <Phone className="w-5 h-5" />
+            </a>
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="p-2 text-slate-600 hover:text-[#0F4CFF] rounded-lg hover:bg-slate-50 transition-colors"
+              className="p-2.5 text-navy-600 hover:text-brand-600 rounded-xl hover:bg-brand-50 transition-all"
               aria-label="Toggle menu"
             >
               {isOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
@@ -105,35 +117,36 @@ export const Header: React.FC = () => {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-white border-b border-slate-100 shadow-lg overflow-hidden"
+            transition={{ duration: 0.3, ease: [0.25, 0.1, 0.25, 1] }}
+            className="md:hidden glass border-t border-navy-100/50 overflow-hidden"
           >
             <div className="px-4 py-4 space-y-1">
               {menuItems.map((item) => (
                 <AnimatedLink
                   key={item.name}
                   to={item.path}
-                  className={`block px-4 py-2.5 rounded-lg text-sm font-semibold transition-all ${
+                  className={`block px-4 py-3 rounded-xl text-sm font-semibold transition-all ${
                     isActive(item.path)
-                      ? 'bg-[#0F4CFF]/5 text-[#0F4CFF]'
-                      : 'text-slate-700 hover:bg-slate-50 hover:text-[#0F4CFF]'
+                      ? 'bg-brand-50 text-brand-600'
+                      : 'text-navy-700 hover:bg-navy-50 hover:text-brand-600'
                   }`}
                 >
                   {item.name}
                 </AnimatedLink>
               ))}
-              <div className="pt-3 border-t border-slate-100 space-y-2">
+              <div className="pt-3 border-t border-navy-100/50 space-y-2">
                 <a
                   href="tel:+919551663530"
-                  className="flex items-center justify-center gap-2 w-full py-3 bg-[#DC2626] text-white rounded-lg font-bold text-sm"
+                  className="flex items-center justify-center gap-2 w-full py-3.5 premium-gradient text-white rounded-xl font-bold text-sm shadow-glow"
                 >
                   <Phone className="w-4 h-4" />
-                  <span>Call 24/7 Emergency</span>
+                  <span>Call 24/7 Emergency: 95516 63530</span>
                 </a>
               </div>
             </div>
           </motion.div>
         )}
       </AnimatePresence>
-    </header>
+    </motion.header>
   );
 };
