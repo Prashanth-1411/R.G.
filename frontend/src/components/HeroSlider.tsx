@@ -128,18 +128,13 @@ export const HeroSlider: React.FC = () => {
           transition={{ duration: 1.2, ease: [0.25, 0.1, 0.25, 1] }}
           className="absolute inset-0"
         >
-          <motion.div
+          <div
             className="absolute inset-0 bg-cover bg-center bg-no-repeat"
             style={{ backgroundImage: `url(${getSlideImage(slide)})` }}
-            initial={{ scale: 1 }}
-            animate={{ scale: 1.08 }}
-            transition={{ duration: INTERVAL / 1000, ease: 'linear' }}
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-navy-900/95 via-navy-900/70 to-navy-900/40" />
-          <div className="absolute inset-0 bg-gradient-to-t from-navy-900/60 via-transparent to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-r from-navy-900/80 via-navy-900/50 to-navy-900/30" />
           <div className="absolute inset-0 bg-hero-glow" />
-          <div className="absolute inset-0 split-pattern opacity-15" />
-          <div className="absolute inset-0 backdrop-brightness-[0.85]" />
+          <div className="absolute inset-0 split-pattern opacity-10" />
         </motion.div>
       </AnimatePresence>
 
