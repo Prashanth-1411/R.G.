@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Blog - R.G. Ambulance Admin</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+<body class="bg-slate-50 font-sans antialiased">
+    <div class="flex h-screen overflow-hidden">
+        <aside class="w-64 bg-slate-900 text-white flex flex-col shrink-0">
+            <div class="p-5 border-b border-white/10">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center"><i class="fas fa-ambulance text-white"></i></div>
+                    <div><h2 class="font-bold text-sm">R.G. Ambulance</h2><p class="text-[10px] text-slate-400 uppercase tracking-wider">Admin Panel</p></div>
+                </div>
+            </div>
+            <nav id="adminNav" class="flex-1 p-4 space-y-1 overflow-y-auto"></nav>
+            <div class="p-4 border-t border-white/10">
+                <div class="flex items-center gap-3 px-4 py-3">
+                    <div class="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center text-xs font-bold" id="userAvatar">A</div>
+                    <div class="flex-1 min-w-0"><p class="text-sm font-semibold truncate" id="userName">Admin</p><p class="text-[10px] text-slate-400 truncate" id="userEmail"></p></div>
+                    <button onclick="adminLogout()" class="p-2 hover:bg-white/10 rounded-lg text-slate-400 hover:text-white transition-all"><i class="fas fa-sign-out-alt"></i></button>
+                </div>
+            </div>
+        </aside>
+        <main class="flex-1 overflow-y-auto">
+            <div class="p-8">
+                <div class="flex items-center justify-between mb-8">
+                    <div><h1 class="text-2xl font-bold text-slate-800">Blog Posts</h1><p class="text-sm text-slate-500">Create and publish articles for the blog page</p></div>
+                    <button onclick="openModal()" class="px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl text-sm flex items-center gap-2"><i class="fas fa-plus"></i> Add Post</button>
+                </div>
+                <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+                    <table class="w-full">
+                        <thead><tr class="bg-slate-50 border-b"><th class="px-6 py-4 text-xs font-semibold text-slate-500 uppercase text-left">Title</th><th class="px-6 py-4 text-xs font-semibold text-slate-500 uppercase text-left">Slug</th><th class="px-6 py-4 text-xs font-semibold text-slate-500 uppercase text-left">Status</th><th class="px-6 py-4 text-xs font-semibold text-slate-500 uppercase text-right">Actions</th></tr></thead>
+                        <tbody id="tableBody"></tbody>
+                    </table>
+                    <div id="loadingState" class="p-12 text-center text-slate-400"><i class="fas fa-spinner fa-spin text-2xl"></i></div>
+                    <div id="emptyState" class="hidden p-12 text-center text-slate-400"><p class="text-sm">No blog posts yet.</p></div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <div id="modal" class="fixed inset-0 z-50 bg-black/50 hidden items-center justify-center p-4" onclick="if(event.target===this)closeModal()">
+        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-2xl p-8 max-h-[90vh] overflow-y-auto">
+            <h3 class="text-lg font-bold mb-6" id="modalTitle">Add Blog Post</h3>
+            <form id="itemForm" class="space-y-4">
+                <input type="hidden" id="editId" />
+                <div><label class="block text-sm font-semibold mb-1">Title *</label><input id="title" required class="w-full px-4 py-3 border rounded-xl text-sm" /></div>
+                <div><label class="block text-sm font-semibold mb-1">Slug *</label><input id="slug" required class="w-full px-4 py-3 border rounded-xl text-sm font-mono" placeholder="emergency-ambulance-tips" /></div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div><label class="block text-sm font-semibold mb-1">Category</label><input id="category" class="w-full px-4 py-3 border rounded-xl text-sm" /></div>
+                    <div><label class="block text-sm font-semibold mb-1">Status</label><select id="status" class="w-full px-4 py-3 border rounded-xl text-sm bg-white"><option value="draft">Draft</option><option value="published">Published</option></select></div>
+                </div>
+                <div><label class="block text-sm font-semibold mb-1">Featured Image</label><input type="file" id="featured_image" accept="image/*" class="w-full text-sm" /></div>
+                <div><label class="block text-sm font-semibold mb-1">Content</label><textarea id="content" rows="8" class="w-full px-4 py-3 border rounded-xl text-sm font-mono"></textarea></div>
+                <div><label class="block text-sm font-semibold mb-1">Meta Title</label><input id="meta_title" class="w-full px-4 py-3 border rounded-xl text-sm" /></div>
+                <div><label class="block text-sm font-semibold mb-1">Meta Description</label><textarea id="meta_description" rows="2" class="w-full px-4 py-3 border rounded-xl text-sm"></textarea></div>
+                <div><label class="block text-sm font-semibold mb-1">Tags</label><input id="tags" class="w-full px-4 py-3 border rounded-xl text-sm" placeholder="ambulance, emergency" /></div>
+                <div class="flex gap-3"><button type="button" onclick="closeModal()" class="flex-1 py-3 border rounded-xl text-sm">Cancel</button><button type="submit" class="flex-1 py-3 bg-blue-600 text-white font-bold rounded-xl text-sm">Save</button></div>
+            </form>
+        </div>
+    </div>
+    <script src="admin-common.js"></script>
+    <script>
+        const token = initAdminShell('blogs.html');
+        const API = ADMIN_API;
+        const authHeaders = { 'Authorization': 'Bearer ' + token };
+
+        async function loadItems() {
+            document.getElementById('loadingState').classList.remove('hidden');
+            document.getElementById('emptyState').classList.add('hidden');
+            document.getElementById('tableBody').innerHTML = '';
+            try {
+                const items = await fetch(API + '/api/blog').then(r => r.json());
+                document.getElementById('loadingState').classList.add('hidden');
+                if (!items.length) { document.getElementById('emptyState').classList.remove('hidden'); return; }
+                document.getElementById('tableBody').innerHTML = items.map(item => `
+                    <tr class="border-b hover:bg-slate-50">
+                        <td class="px-6 py-4 text-sm font-semibold">${item.title}</td>
+                        <td class="px-6 py-4 text-sm font-mono text-slate-500">${item.slug}</td>
+                        <td class="px-6 py-4"><span class="px-2 py-1 rounded-full text-xs font-bold ${item.status === 'published' ? 'bg-green-100 text-green-700' : 'bg-amber-100 text-amber-700'}">${item.status}</span></td>
+                        <td class="px-6 py-4 text-right">
+                            <button onclick="editItem(${item.id})" class="p-2 hover:bg-blue-100 rounded-lg text-slate-400 hover:text-blue-600"><i class="fas fa-edit"></i></button>
+                            <button onclick="deleteItem(${item.id})" class="p-2 hover:bg-red-100 rounded-lg text-slate-400 hover:text-red-600"><i class="fas fa-trash"></i></button>
+                        </td>
+                    </tr>`).join('');
+            } catch (e) { document.getElementById('loadingState').innerHTML = '<p class="text-red-500 text-sm">Failed to load.</p>'; }
+        }
+
+        function openModal(item) {
+            document.getElementById('modalTitle').textContent = item ? 'Edit Post' : 'Add Blog Post';
+            document.getElementById('editId').value = item ? item.id : '';
+            document.getElementById('title').value = item ? item.title : '';
+            document.getElementById('slug').value = item ? item.slug : '';
+            document.getElementById('category').value = item ? item.category || '' : '';
+            document.getElementById('status').value = item ? item.status : 'draft';
+            document.getElementById('content').value = item ? item.content || '' : '';
+            document.getElementById('meta_title').value = item ? item.meta_title || '' : '';
+            document.getElementById('meta_description').value = item ? item.meta_description || '' : '';
+            document.getElementById('tags').value = item ? item.tags || '' : '';
+            document.getElementById('featured_image').value = '';
+            document.getElementById('modal').classList.remove('hidden');
+            document.getElementById('modal').classList.add('flex');
+        }
+        function closeModal() { document.getElementById('modal').classList.add('hidden'); document.getElementById('modal').classList.remove('flex'); }
+        function editItem(id) { fetch(API + '/api/blog/' + id, { headers: authHeaders }).then(r => r.json()).then(openModal); }
+        async function deleteItem(id) {
+            if (!confirm('Delete this post?')) return;
+            await fetch(API + '/api/blog/' + id, { method: 'DELETE', headers: authHeaders });
+            loadItems();
+        }
+        document.getElementById('itemForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const id = document.getElementById('editId').value;
+            const formData = new FormData();
+            formData.append('title', document.getElementById('title').value);
+            formData.append('slug', document.getElementById('slug').value);
+            formData.append('category', document.getElementById('category').value);
+            formData.append('status', document.getElementById('status').value);
+            formData.append('content', document.getElementById('content').value);
+            formData.append('meta_title', document.getElementById('meta_title').value);
+            formData.append('meta_description', document.getElementById('meta_description').value);
+            formData.append('tags', document.getElementById('tags').value);
+            const file = document.getElementById('featured_image').files[0];
+            if (file) formData.append('featured_image', file);
+            const url = id ? API + '/api/blog/' + id : API + '/api/blog';
+            await fetch(url, { method: id ? 'PUT' : 'POST', headers: authHeaders, body: formData });
+            closeModal(); loadItems();
+        });
+        loadItems();
+    </script>
+</body>
+</html>

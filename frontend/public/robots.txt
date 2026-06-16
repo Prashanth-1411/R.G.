@@ -1,0 +1,17 @@
+# Robots.txt for R.G. Ambulance Service Platform
+User-agent: *
+Allow: /
+Allow: /ambulance-services
+Allow: /funeral-services
+Allow: /testimonials
+Allow: /blog
+Allow: /contact
+Allow: /ambulance-service-in-*
+
+# Disallow administrative panel routes
+Disallow: /admin/
+Disallow: /admin/login
+Disallow: /admin/dashboard
+
+# Link to sitemap
+Sitemap: http://localhost:5173/sitemap.xml

@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard - R.G. Ambulance Admin</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+<body class="bg-slate-50 font-sans antialiased">
+    <div class="flex h-screen overflow-hidden">
+        <!-- Sidebar -->
+        <aside id="sidebar" class="w-64 bg-slate-900 text-white flex flex-col shrink-0">
+            <div class="p-5 border-b border-white/10">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-ambulance text-white"></i>
+                    </div>
+                    <div>
+                        <h2 class="font-bold text-sm">R.G. Ambulance</h2>
+                        <p class="text-[10px] text-slate-400 uppercase tracking-wider">Admin Panel</p>
+                    </div>
+                </div>
+            </div>
+            <nav id="adminNav" class="flex-1 p-4 space-y-1 overflow-y-auto"></nav>
+            <div class="p-4 border-t border-white/10">
+                <div class="flex items-center gap-3 px-4 py-3">
+                    <div class="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center text-xs font-bold" id="userAvatar">A</div>
+                    <div class="flex-1 min-w-0">
+                        <p class="text-sm font-semibold truncate" id="userName">Admin</p>
+                        <p class="text-[10px] text-slate-400 truncate" id="userEmail">admin@rgambulance.com</p>
+                    </div>
+                    <button onclick="adminLogout()" class="p-2 hover:bg-white/10 rounded-lg text-slate-400 hover:text-white transition-all" title="Logout">
+                        <i class="fas fa-sign-out-alt"></i>
+                    </button>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 overflow-y-auto">
+            <div class="p-8">
+                <div class="flex items-center justify-between mb-8">
+                    <div>
+                        <h1 class="text-2xl font-bold text-slate-800">Dashboard</h1>
+                        <p class="text-sm text-slate-500">Overview of your website content</p>
+                    </div>
+                </div>
+
+                <!-- Stats Cards -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                    <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm text-slate-500 font-medium">Navbar Items</p>
+                                <p class="text-3xl font-bold text-slate-800 mt-1" id="navCount">0</p>
+                            </div>
+                            <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center">
+                                <i class="fas fa-bars text-blue-600 text-xl"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm text-slate-500 font-medium">Hero Slides</p>
+                                <p class="text-3xl font-bold text-slate-800 mt-1" id="sliderCount">0</p>
+                            </div>
+                            <div class="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center">
+                                <i class="fas fa-images text-purple-600 text-xl"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm text-slate-500 font-medium">Pages</p>
+                                <p class="text-3xl font-bold text-slate-800 mt-1" id="pageCount">0</p>
+                            </div>
+                            <div class="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center">
+                                <i class="fas fa-file-alt text-green-600 text-xl"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm text-slate-500 font-medium">Testimonials</p>
+                                <p class="text-3xl font-bold text-slate-800 mt-1" id="testimonialCount">0</p>
+                            </div>
+                            <div class="w-12 h-12 bg-rose-100 rounded-xl flex items-center justify-center">
+                                <i class="fas fa-quote-left text-rose-600 text-xl"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm text-slate-500 font-medium">Locations</p>
+                                <p class="text-3xl font-bold text-slate-800 mt-1" id="locationCount">0</p>
+                            </div>
+                            <div class="w-12 h-12 bg-cyan-100 rounded-xl flex items-center justify-center">
+                                <i class="fas fa-map-marker-alt text-cyan-600 text-xl"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Stats Cards row 2 -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                    <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm text-slate-500 font-medium">Blog Posts</p>
+                                <p class="text-3xl font-bold text-slate-800 mt-1" id="blogCount">0</p>
+                            </div>
+                            <div class="w-12 h-12 bg-indigo-100 rounded-xl flex items-center justify-center">
+                                <i class="fas fa-newspaper text-indigo-600 text-xl"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm text-slate-500 font-medium">Services</p>
+                                <p class="text-3xl font-bold text-slate-800 mt-1" id="serviceCount">0</p>
+                            </div>
+                            <div class="w-12 h-12 bg-amber-100 rounded-xl flex items-center justify-center">
+                                <i class="fas fa-cogs text-amber-600 text-xl"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm text-slate-500 font-medium">Inquiries</p>
+                                <p class="text-3xl font-bold text-slate-800 mt-1" id="inquiryCount">0</p>
+                            </div>
+                            <div class="w-12 h-12 bg-orange-100 rounded-xl flex items-center justify-center">
+                                <i class="fas fa-envelope text-orange-600 text-xl"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Management -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200">
+                        <h3 class="font-bold text-slate-800 mb-4">Quick Actions</h3>
+                        <div class="space-y-3">
+                            <a href="navbar.html" class="flex items-center gap-4 p-4 rounded-xl bg-slate-50 hover:bg-blue-50 transition-all group">
+                                <div class="w-10 h-10 rounded-xl bg-blue-100 flex items-center justify-center group-hover:bg-blue-200 transition-all">
+                                    <i class="fas fa-bars text-blue-600"></i>
+                                </div>
+                                <div>
+                                    <p class="font-semibold text-sm text-slate-700">Manage Navbar</p>
+                                    <p class="text-xs text-slate-500">Edit menu items, logo, links</p>
+                                </div>
+                                <i class="fas fa-chevron-right ml-auto text-slate-300 group-hover:text-blue-500"></i>
+                            </a>
+                            <a href="sliders.html" class="flex items-center gap-4 p-4 rounded-xl bg-slate-50 hover:bg-blue-50 transition-all group">
+                                <div class="w-10 h-10 rounded-xl bg-purple-100 flex items-center justify-center group-hover:bg-purple-200 transition-all">
+                                    <i class="fas fa-images text-purple-600"></i>
+                                </div>
+                                <div>
+                                    <p class="font-semibold text-sm text-slate-700">Manage Hero Sliders</p>
+                                    <p class="text-xs text-slate-500">Add/edit slider images & text</p>
+                                </div>
+                                <i class="fas fa-chevron-right ml-auto text-slate-300 group-hover:text-purple-500"></i>
+                            </a>
+                            <a href="pages.html" class="flex items-center gap-4 p-4 rounded-xl bg-slate-50 hover:bg-blue-50 transition-all group">
+                                <div class="w-10 h-10 rounded-xl bg-green-100 flex items-center justify-center group-hover:bg-green-200 transition-all">
+                                    <i class="fas fa-file-alt text-green-600"></i>
+                                </div>
+                                <div>
+                                    <p class="font-semibold text-sm text-slate-700">Manage Pages</p>
+                                    <p class="text-xs text-slate-500">Edit page headings & content</p>
+                                </div>
+                                <i class="fas fa-chevron-right ml-auto text-slate-300 group-hover:text-green-500"></i>
+                            </a>
+                            <a href="services.html" class="flex items-center gap-4 p-4 rounded-xl bg-slate-50 hover:bg-blue-50 transition-all group">
+                                <div class="w-10 h-10 rounded-xl bg-amber-100 flex items-center justify-center group-hover:bg-amber-200 transition-all">
+                                    <i class="fas fa-cogs text-amber-600"></i>
+                                </div>
+                                <div>
+                                    <p class="font-semibold text-sm text-slate-700">Manage Services</p>
+                                    <p class="text-xs text-slate-500">Add/edit services & pricing</p>
+                                </div>
+                                <i class="fas fa-chevron-right ml-auto text-slate-300 group-hover:text-amber-500"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200">
+                        <h3 class="font-bold text-slate-800 mb-4">Admin Profile</h3>
+                        <div class="space-y-4">
+                            <div class="flex items-center gap-4 p-4 rounded-xl bg-blue-50">
+                                <div class="w-14 h-14 rounded-full bg-blue-600 flex items-center justify-center text-white font-bold text-xl" id="profileAvatar">A</div>
+                                <div>
+                                    <p class="font-bold text-slate-800" id="profileName">Admin</p>
+                                    <p class="text-sm text-slate-500" id="profileEmail">admin@rgambulance.com</p>
+                                    <span class="inline-block px-2 py-0.5 bg-blue-100 text-blue-700 text-[10px] font-bold rounded-full mt-1">Administrator</span>
+                                </div>
+                            </div>
+                            <div class="p-4 rounded-xl bg-slate-50 text-sm text-slate-600">
+                                <p><i class="fas fa-info-circle text-blue-500 mr-2"></i> Use the sidebar to navigate between management sections. All changes are saved directly to the database.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="admin-common.js"></script>
+    <script>
+        const token = initAdminShell('dashboard.html');
+        const API = ADMIN_API;
+        const authHeaders = { 'Authorization': 'Bearer ' + token };
+
+        async function fetchCount(url, id, useAuth) {
+            try {
+                const res = await fetch(url, useAuth ? { headers: authHeaders } : undefined);
+                const data = await res.json();
+                document.getElementById(id).textContent = Array.isArray(data) ? data.length : 0;
+            } catch { document.getElementById(id).textContent = '0'; }
+        }
+
+        fetchCount(API + '/api/navbar', 'navCount');
+        fetchCount(API + '/api/sliders', 'sliderCount');
+        fetchCount(API + '/api/pages', 'pageCount');
+        fetchCount(API + '/api/services', 'serviceCount');
+        fetchCount(API + '/api/testimonials', 'testimonialCount');
+        fetchCount(API + '/api/locations', 'locationCount');
+        fetchCount(API + '/api/blog', 'blogCount');
+        fetchCount(API + '/api/contact-leads', 'inquiryCount', true);
+    </script>
+</body>
+</html>
