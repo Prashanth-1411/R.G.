@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import authRoutes from './routes/auth.js';
@@ -14,6 +15,10 @@ import testimonialsRoutes from './routes/testimonials.js';
 import blogRoutes from './routes/blog.js';
 import locationsRoutes from './routes/locations.js';
 import contactLeadsRoutes from './routes/contactLeads.js';
+import mediaRoutes from './routes/media.js';
+import sectionsRoutes from './routes/sections.js';
+import activityLogRoutes from './routes/activityLogs.js';
+import usersRoutes from './routes/users.js';
 
 dotenv.config();
 
@@ -40,9 +45,30 @@ app.use('/api/testimonials', testimonialsRoutes);
 app.use('/api/blog', blogRoutes);
 app.use('/api/locations', locationsRoutes);
 app.use('/api/contact-leads', contactLeadsRoutes);
+app.use('/api/media', mediaRoutes);
+app.use('/api/sections', sectionsRoutes);
+app.use('/api/activity-logs', activityLogRoutes);
+app.use('/api/users', usersRoutes);
 
 app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', message: 'R.G. Ambulance API is running.' });
+});
+
+const frontendDist = path.join(__dirname, '..', 'frontend', 'dist');
+app.use(express.static(frontendDist));
+
+app.get('*', (req, res) => {
+  const indexPath = path.join(frontendDist, 'index.html');
+  if (fs.existsSync(indexPath)) {
+    res.sendFile(indexPath);
+  } else {
+    res.status(200).send(`
+      <h1>R.G. Ambulance</h1>
+      <p>Backend API is running.</p>
+      <p>In development, start the frontend with: <code>cd frontend && npm run dev</code></p>
+      <p>Then visit <a href="http://localhost:5173">http://localhost:5173</a></p>
+    `);
+  }
 });
 
 app.use((err, req, res, next) => {

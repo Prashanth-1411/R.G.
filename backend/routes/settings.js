@@ -1,24 +1,12 @@
-import express from 'express';
-import multer from 'multer';
-import path from 'path';
-import { fileURLToPath } from 'url';
-import { getSettings, updateSettings } from '../controllers/siteSettingsController.js';
+import { Router } from 'express';
 import { authenticate } from '../middleware/auth.js';
+import { getSettings, updateSettings } from '../controllers/settingsController.js';
+// Note: uses Prisma-based controller at controllers/settingsController.js
+// Old controller at controllers/siteSettingsController.js can be removed after migration
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-const storage = multer.diskStorage({
-  destination: path.join(__dirname, '..', 'uploads'),
-  filename: (req, file, cb) => {
-    cb(null, Date.now() + '-' + file.originalname);
-  }
-});
-const upload = multer({ storage });
-
-const router = express.Router();
+const router = Router();
 
 router.get('/', getSettings);
-router.put('/', authenticate, upload.single('logo'), updateSettings);
+router.put('/', authenticate, updateSettings);
 
 export default router;

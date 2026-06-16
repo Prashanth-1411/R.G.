@@ -61,8 +61,8 @@ export const HeroSlider: React.FC = () => {
   const [slides, setSlides] = useState<SliderItem[]>(FALLBACK_SLIDES);
   const [current, setCurrent] = useState(0);
   const [progress, setProgress] = useState(0);
-  const timerRef = useRef<ReturnType<typeof setInterval>>();
-  const progressRef = useRef<ReturnType<typeof setInterval>>();
+  const timerRef = useRef<ReturnType<typeof setInterval>>(undefined);
+  const progressRef = useRef<ReturnType<typeof setInterval>>(undefined);
   const isPaused = useRef(false);
 
   useEffect(() => {

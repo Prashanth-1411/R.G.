@@ -186,8 +186,7 @@ export const Footer: React.FC = () => {
             &copy; {currentYear} R.G. Ambulance Service. All rights reserved.
           </p>
           <p className="text-center">
-            Built with care for emergency medical services across India.
-            <span className="inline-block ml-2 text-red-400 animate-pulse-soft">❤️</span>
+            Designed by <span className="text-brand-400 font-semibold">Prashath Web Tech</span>
           </p>
         </div>
       </div>

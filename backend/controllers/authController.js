@@ -1,6 +1,6 @@
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import pool from '../config/db.js';
+import prisma from '../lib/prisma.js';
 
 export const login = async (req, res) => {
   try {
@@ -8,11 +8,10 @@ export const login = async (req, res) => {
     if (!email || !password) {
       return res.status(400).json({ error: 'Email and password are required.' });
     }
-    const [rows] = await pool.query('SELECT * FROM users WHERE email = ?', [email]);
-    if (rows.length === 0) {
+    const user = await prisma.user.findUnique({ where: { email } });
+    if (!user) {
       return res.status(401).json({ error: 'Invalid email or password.' });
     }
-    const user = rows[0];
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
       return res.status(401).json({ error: 'Invalid email or password.' });
@@ -34,11 +33,14 @@ export const login = async (req, res) => {
 
 export const getProfile = async (req, res) => {
   try {
-    const [rows] = await pool.query('SELECT id, name, email, role FROM users WHERE id = ?', [req.user.id]);
-    if (rows.length === 0) {
+    const user = await prisma.user.findUnique({
+      where: { id: req.user.id },
+      select: { id: true, name: true, email: true, role: true },
+    });
+    if (!user) {
       return res.status(404).json({ error: 'User not found.' });
     }
-    res.json(rows[0]);
+    res.json(user);
   } catch (err) {
     console.error('Profile error:', err);
     res.status(500).json({ error: 'Server error.' });
